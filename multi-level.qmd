@@ -256,7 +256,7 @@ It is the proportion what is left unexplained in only looking at the single leve
 1.  Estimate empty model:
 
 ```{r}
-mod1 <- lmer(langPOST #dependent variable
+mod1 <- lmerTest::lmer(langPOST #dependent variable
              ~  (1|schoolnr), #independent variable & random effect is in this case the school number
              data = DAT, #data
              REML = TRUE) # a robust estimator 
