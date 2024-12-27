@@ -132,7 +132,7 @@ In biostatistics & social sciences, mostly the term "longitudinal data" is used 
 Read in:
 
 ```{r}
-DAT1 <- read_dta("2.Example1.dta")
+DAT1 <- read_dta("data/2.Example1.dta")
 ```
 
 1.  How many observation for units and times:
@@ -177,7 +177,7 @@ All 595 units in the data frame has 7 time points.
 ### Look into the Data 2:
 
 ```{r}
-DAT2 <- read_dta("2.Example2.dta")
+DAT2 <- read_dta("data/2.Example2.dta")
 ```
 
 1.  How many observation for units and times:

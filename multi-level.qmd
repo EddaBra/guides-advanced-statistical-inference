@@ -74,7 +74,7 @@ Already done, see @sec-load.libraries.
 2.  Load the data:
 
 ```{r}
-DAT <- read.csv2("1.Example.txt")
+DAT <- read.csv2("data/1.Example.txt")
 ```
 
 3.  Have a look at the data

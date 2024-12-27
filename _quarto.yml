@@ -7,8 +7,8 @@ book:
   date: "summer 2023"
   chapters:
     - index.qmd
-    - panel_data.qmd
     - multi-level.qmd
+    - panel_data.qmd
     - missing-data.qmd
 
 format:

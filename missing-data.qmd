@@ -65,7 +65,7 @@ Note: Implemented in the R package 'naniar', function `mcar_test`. AND: takes a 
 Load data:
 
 ```{r}
-DAT <- read_dta("3.Example1.dta")
+DAT <- read_dta("data/3.Example1.dta")
 summary(DAT)
 ```
 
@@ -176,7 +176,7 @@ One way of dealing with missing data, but meanwhile the most used one.
 -   To account for the variability induced by imputing missing values: impute missing values several times by making random draws from multivariate distributions
 -   data is incomplete, fill with imputed data from a data set with predictive power, depends on the distribution of the data set you fill the holes and account for the uncertainty with random imputations from multivariate distributions. Then you analyse the data and pooled the results.
 
-![Multiple Imputation](0.Screenshots/3.multiple-imp.png){width="600"}
+![Multiple Imputation](figures/3.multiple-imp.png){width="600"}
 
 -   you need 20 or 30 data sets with different distributions for robust estimators
 -   These multivariate distributions have to be informative for the missingness mechanism at hand
@@ -330,7 +330,7 @@ The name CART is from the 80s, nowadays known under the name Classification and 
 -   The cut points divide the sample into more homogeneous subsamples
 -   The splitting process is repeated on both subsamples, so that a series of splits defines a binary tree
 
-![Regression trees](0.Screenshots/3.cart.png){width="300"}
+![Regression trees](figures/3.cart.png){width="300"}
 
 -   you identify different groups of data points in form of random nodes
 -   now we not use donors, we use the random nodes to impute the missing data points **→ Approach:**
@@ -566,7 +566,7 @@ Transformation is done on-the-fly within the imputation algorithm
 -   Since the transformed variable is available for imputation, the hope is that passive imputation removes the bias of the Impute, then transform methods
 -   while restoring consistency among the imputations that was broken in JAV (create derived variable first and impute just as another variable (JAV))
 
-![](0.Screenshots/3.passive.png){width="width"}
+![](figures/3.passive.png){width="width"}
 
 → not of the procedures are perfect, but this is the best we have
 
@@ -843,7 +843,7 @@ Check missing data pattern & test for MCAR (Hint: "mcar test" works best with da
 
 ```{r}
 #read in data from day 2 with manually generated missings
-lDAT <- read_dta("3.Example3.dta")
+lDAT <- read_dta("data/3.Example3.dta")
 
 # test with Little's missing completely at random test (MCAR)
 mcar_test(lDAT)
