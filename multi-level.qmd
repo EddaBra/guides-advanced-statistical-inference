@@ -2,11 +2,6 @@
 title: "Multilevel Data Modelling"
 ---
 
-```{r}
-renv::install("yaml")
-```
-
-
 *Recommended literature:*
 
 Snijders, T. A., & Bosker, R. J. (2011). Multilevel analysis: An introduction to basic and advanced multilevel modeling. Sage. 
