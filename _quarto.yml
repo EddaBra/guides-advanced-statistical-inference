@@ -2,14 +2,13 @@ project:
   type: book
 
 book:
-  title: "Guides for Advanced Statistical Learning"
+  title: "Guides for Advanced Statistical Inference"
   author: "Edda Brandes"
-  date: "summer 2023"
+  date: "Summer 2023"
+  cover-image: cover.png
   chapters:
     - index.qmd
     - multi-level.qmd
-    - panel_data.qmd
-    - missing-data.qmd
 format:
   html:
     theme: cosmo
