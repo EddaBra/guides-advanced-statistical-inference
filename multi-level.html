@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./panel_data.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -181,6 +182,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multilevel Data Modelling</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./panel_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel Data</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -216,24 +223,24 @@ window.Quarto = {
   <li><a href="#cross-level-interaction" id="toc-cross-level-interaction" class="nav-link" data-scroll-target="#cross-level-interaction"><span class="header-section-number">2.6</span> Cross-Level Interaction</a>
   <ul class="collapse">
   <li><a href="#sec-cross.ex" id="toc-sec-cross.ex" class="nav-link" data-scroll-target="#sec-cross.ex"><span class="header-section-number">2.6.1</span> Exercise</a></li>
+  <li><a href="#exercise-model-comparision" id="toc-exercise-model-comparision" class="nav-link" data-scroll-target="#exercise-model-comparision"><span class="header-section-number">2.6.2</span> Exercise Model comparision</a></li>
   </ul></li>
-  <li><a href="#exercise-model-comparision" id="toc-exercise-model-comparision" class="nav-link" data-scroll-target="#exercise-model-comparision"><span class="header-section-number">2.7</span> Exercise : Model comparision</a></li>
-  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing"><span class="header-section-number">2.8</span> Statistical Testing</a>
+  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing"><span class="header-section-number">2.7</span> Statistical Testing</a>
   <ul class="collapse">
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">2.8.1</span> Exercise</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">2.7.1</span> Exercise</a></li>
   </ul></li>
-  <li><a href="#testing-random-effects-with-the-lieklihood-ratio-test-lrt" id="toc-testing-random-effects-with-the-lieklihood-ratio-test-lrt" class="nav-link" data-scroll-target="#testing-random-effects-with-the-lieklihood-ratio-test-lrt"><span class="header-section-number">2.9</span> Testing random effects with the lieklihood-ratio test (LRT)</a></li>
-  <li><a href="#random-slope-variances" id="toc-random-slope-variances" class="nav-link" data-scroll-target="#random-slope-variances"><span class="header-section-number">2.10</span> Random Slope Variances</a></li>
-  <li><a href="#explained-variance" id="toc-explained-variance" class="nav-link" data-scroll-target="#explained-variance"><span class="header-section-number">2.11</span> Explained Variance</a>
+  <li><a href="#testing-random-effects-with-the-lieklihood-ratio-test-lrt" id="toc-testing-random-effects-with-the-lieklihood-ratio-test-lrt" class="nav-link" data-scroll-target="#testing-random-effects-with-the-lieklihood-ratio-test-lrt"><span class="header-section-number">2.8</span> Testing random effects with the lieklihood-ratio test (LRT)</a></li>
+  <li><a href="#random-slope-variances" id="toc-random-slope-variances" class="nav-link" data-scroll-target="#random-slope-variances"><span class="header-section-number">2.9</span> Random Slope Variances</a></li>
+  <li><a href="#explained-variance" id="toc-explained-variance" class="nav-link" data-scroll-target="#explained-variance"><span class="header-section-number">2.10</span> Explained Variance</a>
   <ul class="collapse">
-  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">2.11.1</span> Exercise</a></li>
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">2.10.1</span> Exercise</a></li>
   </ul></li>
-  <li><a href="#heteroscedasticity" id="toc-heteroscedasticity" class="nav-link" data-scroll-target="#heteroscedasticity"><span class="header-section-number">2.12</span> Heteroscedasticity</a></li>
-  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">2.13</span> Diagnostics</a>
+  <li><a href="#heteroscedasticity" id="toc-heteroscedasticity" class="nav-link" data-scroll-target="#heteroscedasticity"><span class="header-section-number">2.11</span> Heteroscedasticity</a></li>
+  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">2.12</span> Diagnostics</a>
   <ul class="collapse">
-  <li><a href="#are-there-contextual-effects-not-considered-test-effects-and-group-means" id="toc-are-there-contextual-effects-not-considered-test-effects-and-group-means" class="nav-link" data-scroll-target="#are-there-contextual-effects-not-considered-test-effects-and-group-means"><span class="header-section-number">2.13.1</span> Are there contextual effects not considered? Test effects and group means</a></li>
-  <li><a href="#level-1-residual-analysis" id="toc-level-1-residual-analysis" class="nav-link" data-scroll-target="#level-1-residual-analysis"><span class="header-section-number">2.13.2</span> Level-1 residual analysis</a></li>
-  <li><a href="#level-2-residual-analysis" id="toc-level-2-residual-analysis" class="nav-link" data-scroll-target="#level-2-residual-analysis"><span class="header-section-number">2.13.3</span> Level-2 residual analysis</a></li>
+  <li><a href="#are-there-contextual-effects-not-considered-test-effects-and-group-means" id="toc-are-there-contextual-effects-not-considered-test-effects-and-group-means" class="nav-link" data-scroll-target="#are-there-contextual-effects-not-considered-test-effects-and-group-means"><span class="header-section-number">2.12.1</span> Are there contextual effects not considered? Test effects and group means</a></li>
+  <li><a href="#level-1-residual-analysis" id="toc-level-1-residual-analysis" class="nav-link" data-scroll-target="#level-1-residual-analysis"><span class="header-section-number">2.12.2</span> Level-1 residual analysis</a></li>
+  <li><a href="#level-2-residual-analysis" id="toc-level-2-residual-analysis" class="nav-link" data-scroll-target="#level-2-residual-analysis"><span class="header-section-number">2.12.3</span> Level-2 residual analysis</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1254,9 +1261,8 @@ IQ_mn:IQ_vr -0.198 -0.154  0.065</code></pre>
 <p>Including the cross-level interaction effect decreases the variance in the random effects in comparison to model 4 and 5. Especially the variance in IQ_verb is very small now. Its a slightly better model than model 4.</p>
 <p>What does the model say us? The higher the IQ mean in a class, the IQ counts less for the score and vice versa.</p>
 </section>
-</section>
-<section id="exercise-model-comparision" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="exercise-model-comparision"><span class="header-section-number">2.7</span> Exercise : Model comparision</h2>
+<section id="exercise-model-comparision" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="exercise-model-comparision"><span class="header-section-number">2.6.2</span> Exercise Model comparision</h3>
 <ol type="1">
 <li>Global intercept model / empty model</li>
 </ol>
@@ -1707,8 +1713,9 @@ IQ_verb -0.253 -0.197</code></pre>
 <p>The last one has also the lowest variance in the residuals of random effects.</p>
 <p>Another option is to compute random intercept models and random slope models, combining SES and IQ as explanatory variables. Like always, it depends on theory, which model makes sense and then test for statistical inference. For example behind model 4 lays the assumption, that if you have a higher ses, your IQ is less important for test results.</p>
 </section>
-<section id="statistical-testing" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="statistical-testing"><span class="header-section-number">2.8</span> Statistical Testing</h2>
+</section>
+<section id="statistical-testing" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="statistical-testing"><span class="header-section-number">2.7</span> Statistical Testing</h2>
 <p>For the fixed parts, the <span class="math inline">\(\gamma\)</span> use the t-test with test statistic (compares the mean between groups):</p>
 <p>The estimates comes from the sample data and are in consequence not the true scores → estimates are dependent on data and not taken for true</p>
 <p><span class="math display">\[
@@ -1725,8 +1732,8 @@ T(γh) =
 <li>Note: If d.f. ≥ 40, the t-distribution can be replaced by a standard normal</li>
 </ul>
 <p>→ the more variables I add, the less power my model is going to have</p>
-<section id="exercise-4" class="level3" data-number="2.8.1">
-<h3 data-number="2.8.1" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">2.8.1</span> Exercise</h3>
+<section id="exercise-4" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">2.7.1</span> Exercise</h3>
 <p>Extended model like in the R script:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>mod7 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(langPOST <span class="sc">~</span>  IQ_verb <span class="sc">+</span> ses <span class="sc">+</span> </span>
@@ -1873,8 +1880,8 @@ IQ_mn:SES_m -0.383 -0.014  0.024  0.173 -0.014 -0.133</code></pre>
 <p>Model 8 has compared to all other models the smallest variance on school level and in the residuals and consequently, will have the a higher ICC than the other models.</p>
 </section>
 </section>
-<section id="testing-random-effects-with-the-lieklihood-ratio-test-lrt" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="testing-random-effects-with-the-lieklihood-ratio-test-lrt"><span class="header-section-number">2.9</span> Testing random effects with the lieklihood-ratio test (LRT)</h2>
+<section id="testing-random-effects-with-the-lieklihood-ratio-test-lrt" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="testing-random-effects-with-the-lieklihood-ratio-test-lrt"><span class="header-section-number">2.8</span> Testing random effects with the lieklihood-ratio test (LRT)</h2>
 <p>Difference between linear regression and HLM is in the <span class="math inline">\(U_{ij}\)</span>, the <span class="math inline">\(\tau^2\)</span></p>
 <ul>
 <li><p>Assesses goodness of fit of two nested statistical models (model 1 and model 2) based on the ratio of their likelihoods</p></li>
@@ -1917,8 +1924,8 @@ IQ_mn:SES_m -0.383 -0.014  0.024  0.173 -0.014 -0.133</code></pre>
 <p>H0 is true means that model 2 (tested model) is not sign. better in fitting the data than model 1 (nested model).</p>
 <p>Multiplication with −2 ensures <span class="math inline">\(λ_{LR}\)</span> assym. converges to <span class="math inline">\(χ^2\)</span> distribution under H0</p>
 <p>Small p-value (related to <span class="math inline">\(χ^2\)</span> distr.) indicates that H0 is wrong, i.e.&nbsp;evidence for model 2</p>
-<section id="deviances-and-lambda_lr" class="level4" data-number="2.9.0.1">
-<h4 data-number="2.9.0.1" class="anchored" data-anchor-id="deviances-and-lambda_lr"><span class="header-section-number">2.9.0.1</span> Deviances and <span class="math inline">\(\lambda_{LR}\)</span></h4>
+<section id="deviances-and-lambda_lr" class="level4" data-number="2.8.0.1">
+<h4 data-number="2.8.0.1" class="anchored" data-anchor-id="deviances-and-lambda_lr"><span class="header-section-number">2.8.0.1</span> Deviances and <span class="math inline">\(\lambda_{LR}\)</span></h4>
 <p>We have (with <span class="math inline">\(\hat{θ}\)</span> denotes the fitted parameters for the saturated model(include more or too much parameter):</p>
 <ul>
 <li>Deviance model 1: <span class="math inline">\(D1 = −2(l(\hatθ_s ) − l(\hatθ_1))\)</span> with <span class="math inline">\(\hatθ_1\)</span> fitted parameters of model 1, <span class="math inline">\(|θ_1 = m1\)</span></li>
@@ -1949,8 +1956,8 @@ IQ_mn:SES_m -0.383 -0.014  0.024  0.173 -0.014 -0.133</code></pre>
 </div>
 </section>
 </section>
-<section id="random-slope-variances" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="random-slope-variances"><span class="header-section-number">2.10</span> Random Slope Variances</h2>
+<section id="random-slope-variances" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="random-slope-variances"><span class="header-section-number">2.9</span> Random Slope Variances</h2>
 <p>As before: LR test Number of tested parameters (variances &amp; covariances): <span class="math inline">\(d + 1\)</span> → because another parameter is added to model 2</p>
 <p>E.g.: testing for a random slope in a model that further contains the random intercept but no other random slopes: <span class="math inline">\(d = 1\)</span></p>
 <ul>
@@ -1962,8 +1969,8 @@ IQ_mn:SES_m -0.383 -0.014  0.024  0.173 -0.014 -0.133</code></pre>
 <figcaption>P-values for random slopes</figcaption>
 </figure>
 </div>
-<section id="exercise-5" class="level4" data-number="2.10.0.1">
-<h4 data-number="2.10.0.1" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">2.10.0.1</span> Exercise</h4>
+<section id="exercise-5" class="level4" data-number="2.9.0.1">
+<h4 data-number="2.9.0.1" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">2.9.0.1</span> Exercise</h4>
 <p>Data (as before) Tasks: Which model does give the better model fit? Test it!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Linear Model, simple model</span></span>
@@ -2205,8 +2212,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>→ also in this case reject the H0, go with the most complex model</p>
 </section>
 </section>
-<section id="explained-variance" class="level2" data-number="2.11">
-<h2 data-number="2.11" class="anchored" data-anchor-id="explained-variance"><span class="header-section-number">2.11</span> Explained Variance</h2>
+<section id="explained-variance" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="explained-variance"><span class="header-section-number">2.10</span> Explained Variance</h2>
 <p>In ordinary linear models we compute <span class="math inline">\(R^2\)</span> for model <span class="math inline">\(ω\)</span> as the proportionate reduction in the RSS (residual sum of squares) starting from the null model <span class="math inline">\(ϕ\)</span>:</p>
 <p><span class="math display">\[
 R2 = 1 − \frac{RSS(ω)}{RSS(ϕ)}
@@ -2223,8 +2230,8 @@ R^2_{L2}= 1- \frac{ τ^2_0(ω)}{ τ^2_0(ϕ)}
 <p><span class="math display">\[
 R^2_{L1} = 1 − \frac{\hatσ^2(ω) }{\hatσ^2(ϕ) }
 \]</span> <em>Note</em>: Unlike linear models R2 is not guaranteed to increase when variables are added!</p>
-<section id="exercise-6" class="level3" data-number="2.11.1">
-<h3 data-number="2.11.1" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">2.11.1</span> Exercise</h3>
+<section id="exercise-6" class="level3" data-number="2.10.1">
+<h3 data-number="2.10.1" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">2.10.1</span> Exercise</h3>
 <p>You have the following models and the related variance estimates: Note: Model A. corresponds to the null model; Model D. to the substantial model.</p>
 <p><img src="figures/1.ex-rss.png" class="img-fluid" width="200"></p>
 <p>Compute <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2_{L1}\)</span>, <span class="math inline">\(R^2_{L2}\)</span></p>
@@ -2253,8 +2260,8 @@ multilevelR2(mod, print=c("RB1",  #explained variance on level 1
 MVP") #total variance explained based on multilevel variance partioning by LaHUis, Hakoyama and Clark (2014)</code></pre>
 </section>
 </section>
-<section id="heteroscedasticity" class="level2" data-number="2.12">
-<h2 data-number="2.12" class="anchored" data-anchor-id="heteroscedasticity"><span class="header-section-number">2.12</span> Heteroscedasticity</h2>
+<section id="heteroscedasticity" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="heteroscedasticity"><span class="header-section-number">2.11</span> Heteroscedasticity</h2>
 <p>Heteroscedasticity can be modelled in ML-Models, i.e.&nbsp;residual variance depends on observed variables.</p>
 <p>E.g., random part at level one <span class="math inline">\(= R_{0ij} + R_{1ij}x_{1ij}\)</span></p>
 <p>Here the level-1 variance is a quadratic function of <span class="math inline">\(X\)</span>:</p>
@@ -2339,21 +2346,21 @@ Number of Groups: 211 </code></pre>
 </div>
 <p><em>Note:</em> From lme function’s help: weights: one-sided formula describing the within-group heteroscedasticity structure.</p>
 </section>
-<section id="diagnostics" class="level2" data-number="2.13">
-<h2 data-number="2.13" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">2.13</span> Diagnostics</h2>
+<section id="diagnostics" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">2.12</span> Diagnostics</h2>
 <p><span class="math display">\[
 Y_{ij} = γ_0 + \sum_{h=1}^r \gamma_h x_{hij} + U_{0j} +\sum_{h=1}^p U_{hj}x_{hij} + R_{ij}
 \]</span></p>
 <p><strong>What has to be checked:</strong> - Does the fixed part contain the right variables? → Test effects and group means - Does the random part contain the right variables? → Test effects and group means - Are the level-1 residuals normally distributed? →Level-1 residual analysis - Do the level-1 residuals have constant variance ?→ Study heteroscedasticity - Are the level-2 random coefficients normally distributed with mean 0? → Level-2 residual analysis and level-1 residual analysis, - Do the level-2 random coefficients have a constant covariance matrix? → Level-2 residual analysis</p>
-<section id="are-there-contextual-effects-not-considered-test-effects-and-group-means" class="level3" data-number="2.13.1">
-<h3 data-number="2.13.1" class="anchored" data-anchor-id="are-there-contextual-effects-not-considered-test-effects-and-group-means"><span class="header-section-number">2.13.1</span> Are there contextual effects not considered? Test effects and group means</h3>
+<section id="are-there-contextual-effects-not-considered-test-effects-and-group-means" class="level3" data-number="2.12.1">
+<h3 data-number="2.12.1" class="anchored" data-anchor-id="are-there-contextual-effects-not-considered-test-effects-and-group-means"><span class="header-section-number">2.12.1</span> Are there contextual effects not considered? Test effects and group means</h3>
 <ul>
 <li>For every level-1 variable <span class="math inline">\(X_h\)</span> check the fixed effect of the group mean <span class="math inline">\(\overline{X}_h\)</span>.</li>
 <li><span class="math inline">\(U_0j\)</span> must not be correlated with the <span class="math inline">\(X_{hij}\)</span> + Include the fixed effect of <span class="math inline">\(X_h\)</span> if it is significant, and continue to use a random effects model. (Also check effects of variables <span class="math inline">\(X_h·_jZ_j\)</span> for cross-level interactions involving <span class="math inline">\(X_h\)</span>) + Random slopes <span class="math inline">\(U_hj\)</span> must not be correlated with the <span class="math inline">\(X_{kij}\)</span> → This can be checked by testing the fixed effect of <span class="math inline">\(X_{k·j}X_{hij}\)</span></li>
 </ul>
 </section>
-<section id="level-1-residual-analysis" class="level3" data-number="2.13.2">
-<h3 data-number="2.13.2" class="anchored" data-anchor-id="level-1-residual-analysis"><span class="header-section-number">2.13.2</span> Level-1 residual analysis</h3>
+<section id="level-1-residual-analysis" class="level3" data-number="2.12.2">
+<h3 data-number="2.12.2" class="anchored" data-anchor-id="level-1-residual-analysis"><span class="header-section-number">2.12.2</span> Level-1 residual analysis</h3>
 <p>Level-1 specification can be studied by disaggregation to the within-group level</p>
 <ul>
 <li>Test the fixed part of the level-1 model using OLS level-1 residuals, calculated per group separately</li>
@@ -2366,8 +2373,8 @@ Y_{ij} = γ_0 + \sum_{h=1}^r \gamma_h x_{hij} + U_{0j} +\sum_{h=1}^p U_{hj}x_{hi
 <figcaption>level-1 residual analysis</figcaption>
 </figure>
 </div>
-<section id="exercise-7" class="level4" data-number="2.13.2.1">
-<h4 data-number="2.13.2.1" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">2.13.2.1</span> Exercise:</h4>
+<section id="exercise-7" class="level4" data-number="2.12.2.1">
+<h4 data-number="2.12.2.1" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">2.12.2.1</span> Exercise:</h4>
 <p>Model: We have the following 2-level Model:</p>
 <ul>
 <li>with IQ, SES, gender, IQ, SES as explanatory variables</li>
@@ -2444,8 +2451,8 @@ Y_{ij} = γ_0 + \sum_{h=1}^r \gamma_h x_{hij} + U_{0j} +\sum_{h=1}^p U_{hj}x_{hi
 </div>
 </section>
 </section>
-<section id="level-2-residual-analysis" class="level3" data-number="2.13.3">
-<h3 data-number="2.13.3" class="anchored" data-anchor-id="level-2-residual-analysis"><span class="header-section-number">2.13.3</span> Level-2 residual analysis</h3>
+<section id="level-2-residual-analysis" class="level3" data-number="2.12.3">
+<h3 data-number="2.12.3" class="anchored" data-anchor-id="level-2-residual-analysis"><span class="header-section-number">2.12.3</span> Level-2 residual analysis</h3>
 <p>Estimated level-2 residuals are always confounded with the estimated level-1 residuals:</p>
 <ul>
 <li>first conduct level-1 residual analysis, then conduct level-2 residual analysis</li>
@@ -2455,8 +2462,8 @@ Y_{ij} = γ_0 + \sum_{h=1}^r \gamma_h x_{hij} + U_{0j} +\sum_{h=1}^p U_{hj}x_{hi
 <li>Squared residuals may be plot as a function of level-2 variables to check for homoscedasticity</li>
 <li><em>Note</em>: Deviation from normality at level-2 might also be caused by an incorrect specification of fixed effects</li>
 </ul>
-<section id="exercise-8" class="level4" data-number="2.13.3.1">
-<h4 data-number="2.13.3.1" class="anchored" data-anchor-id="exercise-8"><span class="header-section-number">2.13.3.1</span> Exercise</h4>
+<section id="exercise-8" class="level4" data-number="2.12.3.1">
+<h4 data-number="2.12.3.1" class="anchored" data-anchor-id="exercise-8"><span class="header-section-number">2.12.3.1</span> Exercise</h4>
 <p><strong>Model</strong>: We have the following 2-level Model:</p>
 <ul>
 <li>with IQ, IQ2−, IQ2+ , SES, gender, <span class="math inline">\(\overline{IQ}\)</span>, <span class="math inline">\(\overline{SES}\)</span> as explanatory variables</li>
@@ -2995,6 +3002,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./panel_data.html" class="pagination-link" aria-label="Panel Data">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
