@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Missing data and Statistical Modelling – Guides for Advanced Statistical Inference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./panel_data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data and Statistical Modelling</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Guides for Advanced Statistical Inference</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-level.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multilevel Data Modelling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./panel_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data and Statistical Modelling</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link active" data-scroll-target="#load-libraries"><span class="header-section-number">4.1</span> Load libraries</a></li>
+  <li><a href="#basics" id="toc-basics" class="nav-link" data-scroll-target="#basics"><span class="header-section-number">4.2</span> Basics</a>
+  <ul class="collapse">
+  <li><a href="#missing-data-mechanisms" id="toc-missing-data-mechanisms" class="nav-link" data-scroll-target="#missing-data-mechanisms"><span class="header-section-number">4.2.1</span> Missing data mechanisms</a></li>
+  <li><a href="#littles-test-for-mcar" id="toc-littles-test-for-mcar" class="nav-link" data-scroll-target="#littles-test-for-mcar"><span class="header-section-number">4.2.2</span> Littles test for MCAR</a></li>
+  <li><a href="#sec-missing.pattern" id="toc-sec-missing.pattern" class="nav-link" data-scroll-target="#sec-missing.pattern"><span class="header-section-number">4.2.3</span> Exercise</a></li>
+  </ul></li>
+  <li><a href="#general-ways-to-deal-with-missing-data" id="toc-general-ways-to-deal-with-missing-data" class="nav-link" data-scroll-target="#general-ways-to-deal-with-missing-data"><span class="header-section-number">4.3</span> General ways to deal with missing data</a></li>
+  <li><a href="#multiple-imputation" id="toc-multiple-imputation" class="nav-link" data-scroll-target="#multiple-imputation"><span class="header-section-number">4.4</span> Multiple Imputation</a>
+  <ul class="collapse">
+  <li><a href="#rubins-combing-rules" id="toc-rubins-combing-rules" class="nav-link" data-scroll-target="#rubins-combing-rules"><span class="header-section-number">4.4.1</span> Rubin’s Combing Rules</a></li>
+  </ul></li>
+  <li><a href="#issues-in-multivariate-imputation" id="toc-issues-in-multivariate-imputation" class="nav-link" data-scroll-target="#issues-in-multivariate-imputation"><span class="header-section-number">4.5</span> Issues in multivariate imputation</a>
+  <ul class="collapse">
+  <li><a href="#congeniality" id="toc-congeniality" class="nav-link" data-scroll-target="#congeniality"><span class="header-section-number">4.5.1</span> Congeniality</a></li>
+  </ul></li>
+  <li><a href="#single-level-imputation-of-mar-data" id="toc-single-level-imputation-of-mar-data" class="nav-link" data-scroll-target="#single-level-imputation-of-mar-data"><span class="header-section-number">4.6</span> Single level imputation of MAR data</a>
+  <ul class="collapse">
+  <li><a href="#joint-modelling-jm" id="toc-joint-modelling-jm" class="nav-link" data-scroll-target="#joint-modelling-jm"><span class="header-section-number">4.6.1</span> Joint Modelling (JM)</a></li>
+  </ul></li>
+  <li><a href="#fully-conditional-specification-fcs" id="toc-fully-conditional-specification-fcs" class="nav-link" data-scroll-target="#fully-conditional-specification-fcs"><span class="header-section-number">4.7</span> Fully Conditional Specification (FCS)</a>
+  <ul class="collapse">
+  <li><a href="#compatibility" id="toc-compatibility" class="nav-link" data-scroll-target="#compatibility"><span class="header-section-number">4.7.1</span> Compatibility</a></li>
+  <li><a href="#imputation-techniques" id="toc-imputation-techniques" class="nav-link" data-scroll-target="#imputation-techniques"><span class="header-section-number">4.7.2</span> Imputation Techniques</a></li>
+  <li><a href="#sec-ex.fully" id="toc-sec-ex.fully" class="nav-link" data-scroll-target="#sec-ex.fully"><span class="header-section-number">4.7.3</span> Exercise</a></li>
+  </ul></li>
+  <li><a href="#predictor-selection" id="toc-predictor-selection" class="nav-link" data-scroll-target="#predictor-selection"><span class="header-section-number">4.8</span> Predictor selection</a>
+  <ul class="collapse">
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise"><span class="header-section-number">4.8.1</span> Exercise</a></li>
+  </ul></li>
+  <li><a href="#derived-variables" id="toc-derived-variables" class="nav-link" data-scroll-target="#derived-variables"><span class="header-section-number">4.9</span> Derived Variables</a>
+  <ul class="collapse">
+  <li><a href="#passive-imputation" id="toc-passive-imputation" class="nav-link" data-scroll-target="#passive-imputation"><span class="header-section-number">4.9.1</span> passive imputation</a></li>
+  <li><a href="#rejection-sampling" id="toc-rejection-sampling" class="nav-link" data-scroll-target="#rejection-sampling"><span class="header-section-number">4.9.2</span> Rejection Sampling</a></li>
+  </ul></li>
+  <li><a href="#interaction-terms-quadratic-relations" id="toc-interaction-terms-quadratic-relations" class="nav-link" data-scroll-target="#interaction-terms-quadratic-relations"><span class="header-section-number">4.10</span> Interaction Terms &amp; Quadratic Relations</a>
+  <ul class="collapse">
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">4.10.1</span> Exercise</a></li>
+  </ul></li>
+  <li><a href="#conditional-imputation" id="toc-conditional-imputation" class="nav-link" data-scroll-target="#conditional-imputation"><span class="header-section-number">4.11</span> Conditional Imputation</a>
+  <ul class="collapse">
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">4.11.1</span> Exercise</a></li>
+  <li><a href="#mice-extensions" id="toc-mice-extensions" class="nav-link" data-scroll-target="#mice-extensions"><span class="header-section-number">4.11.2</span> Mice Extensions</a></li>
+  </ul></li>
+  <li><a href="#hybrid-imputation" id="toc-hybrid-imputation" class="nav-link" data-scroll-target="#hybrid-imputation"><span class="header-section-number">4.12</span> Hybrid imputation</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">4.12.1</span> Exercise</a></li>
+  </ul></li>
+  <li><a href="#longitudinal-data" id="toc-longitudinal-data" class="nav-link" data-scroll-target="#longitudinal-data"><span class="header-section-number">4.13</span> Longitudinal data</a>
+  <ul class="collapse">
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">4.13.1</span> Exercise</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data and Statistical Modelling</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Recommended literature:</em></p>
+<p>Van Buuren, S. (2018). Flexible imputation of missing data. CRC press.<a href="https://stefvanbuuren.name/fimd/">Online Version</a></p>
+<section id="load-libraries" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="load-libraries"><span class="header-section-number">4.1</span> Load libraries</h2>
+</section>
+<section id="basics" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="basics"><span class="header-section-number">4.2</span> Basics</h2>
+<p><strong>Split Questionnaire Designs (SQDs)</strong> randomly assign respondents to different fractions of the full questionnaire (modules) and, subsequently, impute the data that are missing by design</p>
+<p><strong>key question: Why is the data missing?</strong></p>
+<ul>
+<li>by design</li>
+<li>non-response</li>
+<li>in panel: wave non-response</li>
+<li>sometimes information can be imputed from the last wave like the university degree or the biological birth age, sex → <a href="https://tidsskriftet.no/en/2019/05/medisin-og-tall/last-observation-carried-forward">last observational carried forward</a></li>
+</ul>
+<section id="missing-data-mechanisms" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="missing-data-mechanisms"><span class="header-section-number">4.2.1</span> Missing data mechanisms</h3>
+<p><strong>1. Missing completely at random (MCAR):</strong> Missingness probability independent of observed &amp; unobserved variable values <span class="math inline">\(Y\)</span> <span class="math inline">\(f (R | Y ) = f (R)\)</span> (with Y studied variables, R missing data indicator) → wie can deal easy with</p>
+<p><strong>2. Missing at random (MAR):</strong> Conditioned on observed variable values <span class="math inline">\(Y_{obs}\)</span> , missingness probability is independent of unobserved variable values <span class="math inline">\(Y_{mis}\)</span> <span class="math inline">\(f (R | Y ) = f (R |Y_{obs})\)</span> → we can control for e.g.&nbsp;the interviewer we can control for</p>
+<p><strong>3. Missing not at random (MNAR, i.e.&nbsp;not ignorable):</strong> Missingness mechanism is neither MCAR nor MAR <span class="math inline">\(f (R | Y ) = f (R | Y_{obs},Y_{mis})\)</span> i.e.&nbsp;the rich often don’t report their income or their wealth, so data is not missing at random → this is really problem and complicated to solve → topic of this class today</p>
+</section>
+<section id="littles-test-for-mcar" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="littles-test-for-mcar"><span class="header-section-number">4.2.2</span> Littles test for MCAR</h3>
+<p><em>Literature</em>: Little, R. J. (1988). A test of missing completely at random for multivariate data with missing values. Journal of the American statistical Association, 83(404), 1198-1202.</p>
+<p>Tests the null hypothesis that the missing data is MCAR</p>
+<ul>
+<li>The idea is that conditional on the missing indicator <span class="math inline">\(r_i\)</span>, the means of the observed <span class="math inline">\(y\)</span>s are expected to vary across different patterns, if the missingness mechanism is MAR.</li>
+<li><span class="math inline">\(H_0\)</span>: missingness mechanism is MCAR, <span class="math inline">\(H1\)</span>: missingness mechanism is not MCAR</li>
+<li>p-value <span class="math inline">\(&lt; 0.05\)</span>: missing data mechanism is not MCAR</li>
+</ul>
+<p>Note: Implemented in the R package ‘naniar’, function <code>mcar_test</code>. AND: takes a little while, be patient.</p>
+</section>
+<section id="sec-missing.pattern" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-missing.pattern"><span class="header-section-number">4.2.3</span> Exercise</h3>
+<p>Load data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DAT <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/3.Example1.dta"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(DAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id            grade            sex              comp        
+ Min.   :    9   Min.   :1.000   Min.   :0.0000   Min.   :-6.7697  
+ 1st Qu.: 9326   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:-0.7458  
+ Median :18734   Median :3.000   Median :0.0000   Median :-0.0180  
+ Mean   :18442   Mean   :2.956   Mean   :0.4952   Mean   :-0.0607  
+ 3rd Qu.:27580   3rd Qu.:4.000   3rd Qu.:1.0000   3rd Qu.: 0.6776  
+ Max.   :36380   Max.   :6.000   Max.   :1.0000   Max.   : 4.8601  
+                 NA's   :848                      NA's   :2426     
+   eduMother           age             mig        specialNeeds    
+ Min.   :0.0000   Min.   :13.58   Min.   :0.00   Min.   :0.00000  
+ 1st Qu.:0.0000   1st Qu.:15.08   1st Qu.:0.00   1st Qu.:0.00000  
+ Median :0.0000   Median :15.42   Median :0.00   Median :0.00000  
+ Mean   :0.2272   Mean   :15.47   Mean   :0.16   Mean   :0.02661  
+ 3rd Qu.:0.0000   3rd Qu.:15.75   3rd Qu.:0.00   3rd Qu.:0.00000  
+ Max.   :1.0000   Max.   :20.08   Max.   :1.00   Max.   :1.00000  
+ NA's   :2269                     NA's   :993    NA's   :8        
+     cognAb               GY        
+ Min.   :-5.70067   Min.   :0.0000  
+ 1st Qu.:-0.99414   1st Qu.:0.0000  
+ Median :-0.22912   Median :0.0000  
+ Mean   :-0.06858   Mean   :0.4203  
+ 3rd Qu.: 0.85708   3rd Qu.:1.0000  
+ Max.   : 3.98392   Max.   :1.0000  
+ NA's   :130                        </code></pre>
+</div>
+</div>
+<p>Data:</p>
+<ul>
+<li>Data on 9th grade school children from Germany (N=10,531); file: “ex3 1Level.dta”</li>
+<li>Variables: id id of pupil, sex (0 male, 1 female), age, GY (1 Gymnasium, 0 other), specialNeeds (0 no, 1 yes), cognAb (measure of cogn. abilities), grade (grade in GERM), mig (German native speaker, 0 no, 1 yes), eduMother (mother’s educational attainment, 1 university degree, 0 other), comp (orthography competence)</li>
+</ul>
+<p>With a first look in the data with <code>summary</code> we can see, that the amount of missing data differs a lot for different variables.</p>
+<ol type="1">
+<li>Have a look at the missingness pattern and find the proportion of missing values in each variable. Use the <code>table</code> command for this purpose, with the argument <code>exclude=NULL</code> Use the <code>is.na” (or “!is.na”)</code> function. Use the <code>md.pattern</code> function from the mice package.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">is.na.data.frame</span>(DAT),  <span class="at">exclude =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+98636  6674 </code></pre>
+</div>
+</div>
+<p>Overall, there are 6674 missing data points in the data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>missP <span class="ot">&lt;-</span> <span class="fu">md.pattern</span>(DAT, <span class="at">plot=</span>F)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Last rows of the table divided by the data to get an insight of percentages:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(missP[<span class="fu">nrow</span>(missP),]<span class="sc">/</span><span class="fu">nrow</span>(DAT)<span class="sc">*</span><span class="dv">100</span>,<span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          id          sex          age           GY specialNeeds       cognAb 
+        0.00         0.00         0.00         0.00         0.08         1.23 
+       grade          mig    eduMother         comp              
+        8.05         9.43        21.55        23.04        63.37 </code></pre>
+</div>
+</div>
+<p>While the ID is not missing at all (and what would not make sense to expect missings here) there are high missing rates in mother’s educational attainment (21.55 %) and orthography competence (23.04 %).</p>
+<p>For all variables with a missingness less than 5 % the data can be used without thinking twice. 5 % is a rule of thumb. If you do it right, you can also use variables with a missing rate about 60 %, but be sure about that the estimates are quite uncertain. Recommended: not more than 40 %.</p>
+<p>Looking not at single variables, but at complete cases:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">complete.cases</span>(DAT))<span class="sc">/</span><span class="fu">nrow</span>(DAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    FALSE      TRUE 
+0.4442123 0.5557877 </code></pre>
+</div>
+</div>
+<p>Only about 55 % of pupils have completed all questions in the questionnaire.</p>
+<ol start="2" type="1">
+<li>Visualize the missingness pattern using the following functions of the R package <code>naniar</code> (here “DAT” is the whole data set): “vis miss(DAT)” and <code>gg miss upset(DAT)</code> (See also https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(DAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing-data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this graph we can see the missings per variable. The The black lines show the missingness for each observation per variable. More black lines indicate more missings.</p>
+<p><strong>A better tool for visualisation is this:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>linked_miss <span class="ot">&lt;-</span><span class="fu">gg_miss_upset</span>(DAT)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>linked_miss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing-data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The absolute numbers of missings is depicted is in the graphs itself and we can see linked missingness.</p>
+<ul>
+<li>The missings in a certain variable is linked to a bar, that indicates the absolute number of missings.</li>
+<li>The connected dots shows, that the absolute number indiciated by the bar is missing in both variables.</li>
+<li>or in other words: The set size indicates how many NA is missing per variable. The intersection size show how many NA is missing in one variable and at least another.</li>
+<li>The bars are ordered from the highest amount of missingness to the lowest.</li>
+</ul>
+<ol start="3" type="1">
+<li>Describe &amp; interpret the resulting graphs.</li>
+</ol>
+<p>Plot 1:</p>
+<ul>
+<li>overall 6.3% of the data is missing.</li>
+<li>the graph corresponds to the missing pattern in <a href="#sec-missing.pattern" class="quarto-xref"><span>Section 4.2.3</span></a>, there are a lot missings in <code>comp</code> and <code>eduMother</code>.</li>
+</ul>
+<p>Plot 2 gives more information that plot 1:</p>
+<ul>
+<li>most cases missing in the competence, then in mothers education, then in migration, then in grade and then in cognitive ability</li>
+<li>for example we can see there is one case, in which five variables are missing → this case should be excluded from analysis. Because if cases have missings in all main variables of interest, you should exclude these cases.</li>
+<li>we can also see, there is a high number in missings for orthography competence and that there is a high missingsness for orthography competence AND mothers education in combination.</li>
+<li>There is a high combination in the missingness for migration and mothers education. In all cases, where the question of migration is not answered, the question of mothers education is not answered, too.→ this is a strong inticator, that MCAR is not true and there are systematic missings.</li>
+</ul>
+<ol start="4" type="1">
+<li>Test whether the missingness pattern indicates MCAR.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test with Little's missing completely at random test (MCAR)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcar_test</span>(DAT) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  statistic    df p.value missing.patterns
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;int&gt;
+1     2093.   232       0               32</code></pre>
+</div>
+</div>
+<p>The p-value is so small, that MCAR must be rejected. There is no indicator, that the missings differ randomly. We must reject <span class="math inline">\(H_0\)</span>. Looking at the plot before, that is not suprisingly at all.</p>
+<p>The Little Test split the data into groups and looks for patterns of missings in this groups. We have 10.000 rows in the data sets. You make different subsets of the sample and compute the mean of the variables. Then the means are compared in different groups. If it is random, the average of the average is always the same, because the holes are random. → if the holes are random, the holes don’t play a role in average computations and we should get the same values.</p>
+</section>
+</section>
+<section id="general-ways-to-deal-with-missing-data" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="general-ways-to-deal-with-missing-data"><span class="header-section-number">4.3</span> General ways to deal with missing data</h2>
+<ol type="1">
+<li>Ignore it:</li>
+</ol>
+<ul>
+<li>listwise deletion, complete case analysis</li>
+<li>partly ok if MCAR, however, reduction in statistical power</li>
+<li>rule of thumb: if percentage of missing data <span class="math inline">\(&lt; 5%\)</span> statistical uncertainty due to sampling and (parameter) estimation larger than gain when modeling / imputing missing data</li>
+<li>exception: if one has a special interest in the missingness process, e.g.&nbsp;why do less than 5% not participate in a study</li>
+</ul>
+<ol start="2" type="1">
+<li>Model or impute it:</li>
+</ol>
+<ul>
+<li><strong>necessary for MAR and MNAR, otherwise biased estimated might result</strong>
+<ul>
+<li>often in case of income: income is often not missing randomly. Aggregate level data of income differs from surveys on individual level → data for people with a wealth above 2 million are missing often in survey. On the side of the lower income we often have income levels around 399 Euro because of the tax benchmark of 400 Euro. People at lower level often respond in surveys because of the incentives.</li>
+</ul></li>
+<li><strong>MNAR is problematic since the missingness probability depends in the missingness itself</strong> (often the case with income data)</li>
+<li>MNAR cannot fully be counteracted by a model or a imputation routine; a good approach is using sensitivity analysis (e.g.&nbsp;Zinn &amp; Gnambs (2019). <a href="https://link.springer.com/article/10.3758/s13428-018-1021-z">Modeling competence development in the presence of selection bias</a>. BRM.)</li>
+<li>MAR Modelling, e.g.&nbsp;data augmentation (e.g.&nbsp;Tan, Tian, &amp; Ng (2009). <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781420077506/bayesian-missing-data-problems-ming-tan-kai-wang-ng-guo-liang-tian">Bayesian missing data problems: EM, data augmentation and noniterative computation</a> CRC Press.) or Full information maximum likelihood (FIML, see Enders 2010)</li>
+<li>MAR (multiple) imputation
+<ul>
+<li>completely open source package</li>
+</ul></li>
+</ul>
+</section>
+<section id="multiple-imputation" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="multiple-imputation"><span class="header-section-number">4.4</span> Multiple Imputation</h2>
+<p>One way of dealing with missing data, but meanwhile the most used one.</p>
+<ul>
+<li>There are many way of “imputing” missing values: hot deck imputation, mean imputation, regression imputation (impute by estimators of regression model)</li>
+<li>To account for the variability induced by imputing missing values: impute missing values several times by making random draws from multivariate distributions</li>
+<li>data is incomplete, fill with imputed data from a data set with predictive power, depends on the distribution of the data set you fill the holes and account for the uncertainty with random imputations from multivariate distributions. Then you analyse the data and pooled the results.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/3.multiple-imp.png" class="img-fluid figure-img" width="600"></p>
+<figcaption>Multiple Imputation</figcaption>
+</figure>
+</div>
+<ul>
+<li>you need 20 or 30 data sets with different distributions for robust estimators</li>
+<li>These multivariate distributions have to be informative for the missingness mechanism at hand</li>
+<li>Note: More data does not help more; data without any predictive power for the missingness mechanism just unnecessarily increases the variability between the imputed values</li>
+</ul>
+<section id="rubins-combing-rules" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="rubins-combing-rules"><span class="header-section-number">4.4.1</span> Rubin’s Combing Rules</h3>
+<p>We pool the data with Rubin´s Rules (RR)</p>
+<ul>
+<li>are designed to pool parameter estimates, such as mean differences, regression coefficients, standard errors and to derive confidence intervals and p-values.</li>
+<li>When RR are used, it is assumed that the repeated parameter estimates are normally distributed. This cannot be assumed for all statistical test statistics, e.g.&nbsp;correlation coefficients. (For these test statistics, transformations are first performed before RR can be applied.) → Bayesian idea: if you estimate a parameter, Rubin assumes the parameter is a random value (not fixed), because it has a standard error. From this random distribution for the parameters you can compute a pooled parameter estimate.</li>
+<li>The pooled parameter estimate <span class="math inline">\(\overlineθ\)</span> is computed as follows, it is the mean of the estimates:</li>
+</ul>
+<p><span class="math display">\[
+\overlineθ = \frac{1}{m}\sum^m_{i=1}θ_i
+\]</span></p>
+<ul>
+<li>with <span class="math inline">\(m\)</span> is the number of imputed datasets, <span class="math inline">\(θ_i\)</span> is the sum of the parameter estimate (i.e.&nbsp;mean difference) using the <span class="math inline">\(ith\)</span> imputed dataset.</li>
+<li>The <strong>pooled standard error</strong> is derived from different components that <strong>reflect the within</strong> (the sampling variance of the mean within a data set for each data set, measured by the standard error) <strong>and between</strong> (the sampling variance of a parameter <span class="math inline">\(X\)</span> between the different data sets) <strong>sampling variance</strong> of the mean difference in the multiple imputed datasets.</li>
+</ul>
+<p><em>Within imputation variance:</em></p>
+<ul>
+<li>average of the mean of the within variance estimate, i.e.&nbsp;squared standard error, in each imputed dataset</li>
+</ul>
+<p><span class="math display">\[
+V_w= \frac{1}{m}\sum^m_{i=1}SE^2_i
+\]</span></p>
+<ul>
+<li>With <span class="math inline">\(SE^2_i\)</span> is the sum of the squared standard error (SE), estimated in each imputed data set <span class="math inline">\(i\)</span> * reflects the sampling variance, i.e.&nbsp;the precision of the parameter of interest in each completed dataset</li>
+<li>will be large in small samples and small in large samples</li>
+</ul>
+<p><em>Between imputation variance:</em></p>
+<ul>
+<li>Variance due to imputing missing data</li>
+<li>estimated by taking the variance of the parameter of interest estimated over imputed datasets</li>
+</ul>
+<p><span class="math display">\[
+V_b= \frac{\sum^m_{1=1}(\theta_i -\overline\theta_i)^2  }{m-1}
+\]</span></p>
+<ul>
+<li>This formula is equal to the formula for the (sample) variance which is commonly used in statistics.</li>
+<li>This value is large when the level of missing data is high and smaller when the level of missing data is small</li>
+<li>For significance testing a univariate Wald test is used, see van Buuren (2018) The derivation of the degrees of freedom for testing, how to get p-values, and confidence intervals is described in very detail in as well</li>
+</ul>
+</section>
+</section>
+<section id="issues-in-multivariate-imputation" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="issues-in-multivariate-imputation"><span class="header-section-number">4.5</span> Issues in multivariate imputation</h2>
+<ul>
+<li>Most imputation models for <span class="math inline">\(Y_j\)</span> (the missing data point in the variable j) use the remaining columns <span class="math inline">\(Y_{-j}\)</span> (the values from the other variables that are not missing) as predictors</li>
+<li>it builds on the idea of MAR: The probability that an observation is missing may depend on <span class="math inline">\(Y_{obs}\)</span> but not on <span class="math inline">\(Y_{mis}\)</span>, so the probability that <span class="math inline">\(Y_j\)</span> is missing for an individual may be related to the values of variables <span class="math inline">\(Y_h, Y_k,\dots\)</span></li>
+<li>The rationale is that conditioning on <span class="math inline">\(Y_{-j}\)</span> preserves the relations among the <span class="math inline">\(Y_j\)</span> <span class="math inline">\(Y_j\)</span> in the imputed data</li>
+<li>Practical problems that can occur in multivariate missing data
+<ul>
+<li>The predictors <span class="math inline">\(Y_{-j}\)</span> themselves can contain missing values, so if competence is the <span class="math inline">\(Y\)</span>, maybe although the missings for competence are exluded to impute the others, there are still missings in mothers education</li>
+<li>“Circular” dependence can occur, where <span class="math inline">\(Y^{mis}_j\)</span> depends on <span class="math inline">\(Y^{mis}_h\)</span> , and <span class="math inline">\(Y^{mis}_h\)</span> depends <span class="math inline">\(Y^{mis}_j\)</span> with <span class="math inline">\(h \not= j\)</span> , because in general <span class="math inline">\(Y_j\)</span> and <span class="math inline">\(Y_h\)</span> are correlated (even given other variables)</li>
+<li>Variables are of different types (e.g., binary, unordered, ordered, continuous); application of theoretically convenient models (multivariate normal) theoretically inappropriate
+<ul>
+<li>most models are based on normal distribution but in fact in the actual worlds is not true</li>
+</ul></li>
+<li>Especially with large proportion of missingness and small sample size, collinearity or empty cells can occur</li>
+<li>The ordering of the rows and columns can be meaningful, e.g., as in longitudinal data</li>
+<li>The relation between <span class="math inline">\(Y_j\)</span> and predictors <span class="math inline">\(Y_{−j}\)</span> can be complex (non-linear, subject to censoring, etc.) Imputation can create impossible combinations, such as pregnant fathers</li>
+</ul></li>
+</ul>
+<p>→ ALL that problems can be coped with! <code>mice</code> can handle it (:</p>
+<section id="congeniality" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="congeniality"><span class="header-section-number">4.5.1</span> Congeniality</h3>
+<ul>
+<li>Congeniality: Relation between the imputation model and the analysis model</li>
+<li>Imputation model should be more general than the substantive model, i.e., analysis procedure should be congenial to the imputation model</li>
+<li>Least condition: all variables of the analysis model have to be part of the imputation model → imputation model can be larger, but not the other way around.</li>
+<li>Non-congeniality may lead to biased parameter estimates of the analysis model</li>
+</ul>
+</section>
+</section>
+<section id="single-level-imputation-of-mar-data" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="single-level-imputation-of-mar-data"><span class="header-section-number">4.6</span> Single level imputation of MAR data</h2>
+<section id="joint-modelling-jm" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="joint-modelling-jm"><span class="header-section-number">4.6.1</span> Joint Modelling (JM)</h3>
+<p>– Everything is included in one step. Skipped, because not often used nowadays –</p>
+<p>General idea: - Assumes ignorability: applicable under MCAR or MAR JM starts from the assumption that the data can be described by a multivariate distribution - Imputations are created as draws from the fitted distribution - The model can be based on any multivariate distribution - The multivariate normal distribution is most widely applied - Further details: e.g.&nbsp;Schafer, J. L. 1997. Analysis of Incomplete Multivariate Data. London: Chapman &amp; Hall</p>
+</section>
+</section>
+<section id="fully-conditional-specification-fcs" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="fully-conditional-specification-fcs"><span class="header-section-number">4.7</span> Fully Conditional Specification (FCS)</h2>
+<ul>
+<li>FCS imputes multivariate missing data on a variable-by-variable basis → step-wise &amp; Specification of an imputation model for each incomplete variable required; creation of imputations per variable in an iterative fashion
+<ul>
+<li>i.e.&nbsp;for income a ln model, because income is distributed logarithmic normally → ln income is a ln income model of the variables of the income in the data set. Consequently, you need a good prediction model that is feasible, that you can use as an imputation model</li>
+</ul></li>
+<li>FCS specifies the multivariate distribution <span class="math inline">\(P(Y ,X, R | θ)\)</span> through a set of conditional densities <span class="math inline">\(P(Y_j | X,Y_j , R, ϕ_j )\)</span> (I identify Y_j by another variable X, accounting for the missingness with the last <span class="math inline">\(ϕ_j\)</span>, the parameters in the prediction model)</li>
+<li>This conditional density is used to impute <span class="math inline">\(Y_j\)</span> given <span class="math inline">\(X,Y−j\)</span> and <span class="math inline">\(R\)</span></li>
+<li>Starting from simple random draws from the marginal distribution, imputation under FCS is done by iterating over the conditionally specified imputation models FCS directly specifies the conditional distributions from which draws should be made → bypasses the need to specify a multivariate model for the data (as needed in JM)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="0.Screenshots\3.mice.png" class="img-fluid figure-img" width="700"></p>
+<figcaption>MICE Algorithm</figcaption>
+</figure>
+</div>
+<ul>
+<li>The MICE algorithm is a Markov chain Monte Carlo (MCMC) method, where the state space is the collection of all imputed values</li>
+<li>More specifically, (if conditionals are compatible) the MICE algorithm is a Gibbs sampler: a Bayesian simulation technique that samples from the conditional distributions in order to obtain samples from the joint distribution</li>
+<li>Mind: in the MICE algorithm, the conditional distributions are under direct control of the imputer: the joint distribution only implicitly known &amp; may not exist</li>
+<li>From theoretical view point: not as good (we do not know to which the algo converges), in practice: algo works very well (shown by a multitude of simulations) + a testical toolbox is missing, only graphical tests are available at the moment</li>
+<li>Diagnostics of imputations are necessary (e.g.&nbsp;having a look at the trace plots produced by the sampler)</li>
+</ul>
+<section id="compatibility" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="compatibility"><span class="header-section-number">4.7.1</span> Compatibility</h3>
+<ul>
+<li>Two conditional densities <span class="math inline">\(p(Y1 | Y2)\)</span> (income depending on age) and <span class="math inline">\(p(Y1 | Y2)\)</span> (age depending on income) are compatible if a joint distribution, p(Y1,Y2) exists that has <span class="math inline">\(p(Y1 | Y2)\)</span> and <span class="math inline">\(p(Y1 | Y2)\)</span> as its conditional densities</li>
+<li>PROBLEM: this is not always clear, i.e.&nbsp;pregnancy and gender → then the algorithm gives not feasible results</li>
+<li>Can the imputed data be trusted when we cannot find such a joint distribution? Incompatibility easily arises if deterministic functions of the data are imputed along with their originals, especially the case for interaction terms, quadratic terms</li>
+<li>Such terms introduce feedback loops and impossible combinations into the system, which can invalidate the imputations</li>
+<li>Simulation studies: imputations robust against violations of compatibility, as long as each conditional model is correctly specified
+<ul>
+<li>i.e.&nbsp;if you are interested in pregnancy, you make one model for men and another for women, only women are included in the imputation model</li>
+</ul></li>
+</ul>
+</section>
+<section id="imputation-techniques" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="imputation-techniques"><span class="header-section-number">4.7.2</span> Imputation Techniques</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="0.Screenshots\3.mice-imp.png" class="img-fluid figure-img" width="600"></p>
+<figcaption>Imputation Methods</figcaption>
+</figure>
+</div>
+<p>MEANWHILE EXTENDED! → <a href="https://stefvanbuuren.name/fimd/sec-modelform.html">Complete List of Mice Methods</a> in R</p>
+<ul>
+<li>“Logreg”, “polyreg” and “polr” tend to preserve the main effects well provided that the parameters are identified and can be reasonably well estimated - Often: the ratio of the number of fitted parameters relative to the number of events easily drops below 10 → use more robust methods, like predictive mean matching or classification and regression trees (CART)</li>
+</ul>
+<p>In the following: Two methods explained, that doing well in practice!</p>
+<section id="predictive-mean-matching-pmm-algorithm" class="level4" data-number="4.7.2.1">
+<h4 data-number="4.7.2.1" class="anchored" data-anchor-id="predictive-mean-matching-pmm-algorithm"><span class="header-section-number">4.7.2.1</span> Predictive Mean Matching (PMM), Algorithm</h4>
+<p><code>pmm</code> in <code>library(mice)</code> → very robust, often put in</p>
+<ul>
+<li>PMM calculates the predicted value of target variable Y according to the specified imputation model</li>
+<li>For each missing entry: PMM uses a set of candidate donors (3, <strong>5</strong> (the default number of donors), 10) from all complete cases that have predicted values closest to the predicted value for the missing entry
+<ul>
+<li>from the complete cases I can compute a regression line. The donors are the complete/ observed cases, that donor their distance from the regression line for the computation of the value of the missing cell</li>
+<li>One donor is randomly drawn from the candidates, and the observed value of the donor is taken to replace the missing value The assumption is the distribution of the missing cell is the same as the observed data of the candidate donors → the missing cells are also part of the predicted regression line</li>
+</ul></li>
+<li>PMM works best with large samples</li>
+<li>PMM is fairly robust to transformations of the target variable (e.g.&nbsp;imputing <span class="math inline">\(log(Y)\)</span> yields similar results to imputing <span class="math inline">\(expY\)</span>) Less vulnerable to model misspecification (e.g.&nbsp;mostly linear model is not in context of imputation)
+<ul>
+<li>because imputation is based on the donors, if the donors (mis-)specificate the imputed values will does the same.</li>
+</ul></li>
+</ul>
+<p><strong>Description of the algorithm</strong>:</p>
+<ul>
+<li>Adapted from https://statisticalhorizons.com/predictive-mean-matching</li>
+<li>Suppose there is a single variable <span class="math inline">\(Y\)</span> that has some cases with missing data, and a set of variables <span class="math inline">\(X\)</span> (with no missing data) that are used to impute <span class="math inline">\(Y\)</span>.</li>
+</ul>
+<ol type="1">
+<li>For cases with no missing data, estimate a linear regression of Y on X, producing a set of coefficients b</li>
+<li>Make a random draw from the posterior predictive distribution of <span class="math inline">\(b\)</span>, producing a new set of coefficients <span class="math inline">\(b⋆\)</span>. (Typically this is a random draw from a multivariate normal distribution with mean <span class="math inline">\(b\)</span> and the estimated covariance matrix of <span class="math inline">\(b\)</span> (with an additional random draw for the residual variance). This step is necessary to produce sufficient variability in the imputed values, and is common to all proper methods for multiple imputation.)</li>
+<li>Using <span class="math inline">\(b⋆\)</span>, generate predicted values for <span class="math inline">\(Y\)</span> for all cases, both those with data missing on <span class="math inline">\(Y\)</span> and those with data present.</li>
+<li>For each case with missing <span class="math inline">\(Y\)</span>, identify a set of cases with observed <span class="math inline">\(Y\)</span> whose predicted values are close to the predicted value for the case with missing data.</li>
+<li>From among those close cases, randomly choose one and assign its observed value to substitute for the missing value.</li>
+<li>Repeat steps 2 through 5 for each completed data set.</li>
+</ol>
+<p><strong>Note</strong>: Here, linear regression is just used to construct a metric for matching cases with missing data to similar cases with data observed.</p>
+<p><strong>Caution</strong>: SPSS and Stata (here it is called ICE), have implemented PMM with a default setting of only one donor that actually, invalidates the method</p>
+<p><strong>Pitfalls</strong> - There’s no mathematical theory to justify it (only simulations) - Danger of the duplication of the same donor value many times: - Problem more likely to occur if the sample is small, or if there are many more missing data than observed data in a particular region of the predicted value (likely under high proportion of missing values) - Method does not work for a small number of predictors (e.g.&nbsp;Heitjan and Little 1991 for two predictors only) - May be inadequate in the presence of strong nonlinear relations (i.e.&nbsp;if imputation model is strongly misspecified) → Any terms appearing in the complete-data model need to be accounted for in the imputation model (mind: congeniality is necessary)</p>
+</section>
+<section id="classification-and-regression-trees-cart" class="level4" data-number="4.7.2.2">
+<h4 data-number="4.7.2.2" class="anchored" data-anchor-id="classification-and-regression-trees-cart"><span class="header-section-number">4.7.2.2</span> Classification and Regression Trees (CART)</h4>
+<p>Not only a method for imputation, but also for modelling &amp; predicting, method for random forests</p>
+<p><code>cart</code> method in mice package in R or approaches using random forests are also available, idea is similar (<code>rf</code>)</p>
+<p>The name CART is from the 80s, nowadays known under the name Classification and Regression Trees</p>
+<ul>
+<li>CART (Breiman et al.&nbsp;1984) are a popular class of machine learning algorithms</li>
+<li>CART models seek predictors and cut points in the predictors that are used to split the sample</li>
+<li>The cut points divide the sample into more homogeneous subsamples</li>
+<li>The splitting process is repeated on both subsamples, so that a series of splits defines a binary tree</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/3.cart.png" class="img-fluid figure-img" width="300"></p>
+<figcaption>Regression trees</figcaption>
+</figure>
+</div>
+<ul>
+<li>you identify different groups of data points in form of random nodes</li>
+<li>now we not use donors, we use the random nodes to impute the missing data points <strong>→ Approach:</strong></li>
+</ul>
+<ol type="1">
+<li>Traverse the tree and find the appropriate terminal node</li>
+<li>Form the donor group of all observed cases at the terminal node</li>
+<li>Randomly draw a case from the donor group, and take its reported value as the imputed value</li>
+</ol>
+<p>The idea is identical to PMM, where the “predictive mean” is now calculated by a tree model instead of a regression model</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li>CART is robust against outliers, can deal with multicollinearity and skewed distributions, and are flexible enough to fit interactions and nonlinear relations</li>
+<li>many aspects of model fitting have been automated, so there is “little tuning needed by the imputer” (Burgette and Reiter 2010)</li>
+</ul>
+</section>
+</section>
+<section id="sec-ex.fully" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="sec-ex.fully"><span class="header-section-number">4.7.3</span> Exercise</h3>
+<p>We want to find out the grade by the orthography competence, the sex and mothers education → Analysis Model:</p>
+<p><span class="math display">\[
+grade_i = β_0 + β_1comp_i + β_2sex_i + β_3eduMother_i + ϵ_i
+\]</span></p>
+<ol start="2" type="1">
+<li>Conduct a complete case analysis.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother, <span class="at">data=</span>DAT)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = grade ~ comp + sex + eduMother, data = DAT)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.10780 -0.55174 -0.00511  0.52484  2.82866 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.08966    0.01582  195.28  &lt; 2e-16 ***
+comp        -0.30627    0.01034  -29.63  &lt; 2e-16 ***
+sex         -0.28604    0.02111  -13.55  &lt; 2e-16 ***
+eduMother   -0.12222    0.02459   -4.97 6.88e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7905 on 5955 degrees of freedom
+  (4572 observations deleted due to missingness)
+Multiple R-squared:  0.1935,    Adjusted R-squared:  0.1931 
+F-statistic: 476.2 on 3 and 5955 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>This model is a complete case analysis. All data available in the data set is used. Though, there are a lot missings in the explanatory variables as we have investigated in <a href="#sec-missing.pattern" class="quarto-xref"><span>Section 4.2.3</span></a></p>
+<ol start="2" type="1">
+<li>Impute missing values (using mice’s default settings):</li>
+</ol>
+<p>Have a look at your imputed data sets using the command <code>complete</code>: Setting <code>action</code> to 1 we can have a look in the first imputed data set. Overall, we have imputed 5 data sets.</p>
+<p>Which imputation techniques have been used (imp$method). Do you think the default settings fit the data? Try some other reasonable imputation techniques.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#access the method used for each variable in the data set</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>meth <span class="ot">&lt;-</span> imp<span class="sc">$</span>method</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>meth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          id        grade          sex         comp    eduMother          age 
+          ""        "pmm"           ""        "pmm"        "pmm"           "" 
+         mig specialNeeds       cognAb           GY 
+       "pmm"        "pmm"        "pmm"           "" </code></pre>
+</div>
+</div>
+<p>Because there is no missing data points in id, GY, sex and age, no method is reported. For all the other variables <code>pmm</code> is used.</p>
+<p>eduMother is a binary and has a lot missings, consequently we go with a more robust method and switch to <code>cart</code>.</p>
+<p>I set <code>mig</code> also to <code>cart</code>, because it is also a binary and missings are high, too. This is not done in the given R File, though.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>meth[<span class="st">"eduMother"</span>] <span class="ot">&lt;-</span> <span class="st">"cart"</span> <span class="co">#method for eduMother should be cart</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>meth[<span class="st">"mig"</span>] <span class="ot">&lt;-</span> <span class="st">"cart"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>meth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          id        grade          sex         comp    eduMother          age 
+          ""        "pmm"           ""        "pmm"       "cart"           "" 
+         mig specialNeeds       cognAb           GY 
+      "cart"        "pmm"        "pmm"           "" </code></pre>
+</div>
+</div>
+<p>First of all, id is not a predictor for the other variables, so we set ID to 0</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> imp<span class="sc">$</span>predictorMatrix</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pred[, <span class="st">"id"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             id grade sex comp eduMother age mig specialNeeds cognAb GY
+id            0     1   1    1         1   1   1            1      1  1
+grade         0     0   1    1         1   1   1            1      1  1
+sex           0     1   0    1         1   1   1            1      1  1
+comp          0     1   1    0         1   1   1            1      1  1
+eduMother     0     1   1    1         0   1   1            1      1  1
+age           0     1   1    1         1   0   1            1      1  1
+mig           0     1   1    1         1   1   0            1      1  1
+specialNeeds  0     1   1    1         1   1   1            0      1  1
+cognAb        0     1   1    1         1   1   1            1      0  1
+GY            0     1   1    1         1   1   1            1      1  0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(DAT, <span class="at">predictorMatrix =</span> pred, <span class="co">#define the prediction matrix</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">method=</span>meth) <span class="co">#define method new, because we have changed the method for eduMother and set ID to 0 in predictor matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   5  grade  comp  eduMother  mig  specialNeeds  cognAb</code></pre>
+</div>
+</div>
+<p>Pool the results of all your imputations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fit_ex1 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp, <span class="at">exp=</span><span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term   estimate   std.error  statistic        df       p.value
+1 (Intercept)  3.1136024 0.012982669 239.827604 225.05644 4.196059e-273
+2        comp -0.2986724 0.008347539 -35.779692  43.83768  4.411478e-34
+3         sex -0.2719736 0.017270884 -15.747520 193.26957  1.720737e-36
+4   eduMother -0.1319027 0.020334903  -6.486516 254.89505  4.536220e-10</code></pre>
+</div>
+</div>
+<p>Not much differences in the coefficients between the imputation model and the complete cases model. The p-values are much more smaller in the imputation model than in the complete cases one.</p>
+<p><strong>What have we done?</strong> What we have checked for is that the model is robust against missings at random (MAR).</p>
+</section>
+</section>
+<section id="predictor-selection" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="predictor-selection"><span class="header-section-number">4.8</span> Predictor selection</h2>
+<ul>
+<li><strong>General rule</strong>: use every bit of available information yields multiple imputations that have minimal bias and maximal efficiency</li>
+<li>Including as many predictors as possible tends to make the MAR assumption more plausible, thus reducing the need to make special adjustments for MNAR mechanisms</li>
+<li>For data sets containing hundreds or thousands of variables, using all predictors may not be feasible (because of multicollinearity and computational problems) → approach of machine learners, very problematic</li>
+<li><strong>Rule of thumb</strong> for Social Science: It is expedient to select a <strong>suitable subset of data</strong> that contains no more than <strong>15 to 25 variables</strong></li>
+<li><strong>Strategy to select predictors</strong>, not more than twice of variables of the causal model should not included in the subset
+<ul>
+<li>Include all variables that appear in the complete-data model</li>
+<li>Note that interactions of scientific interest also need to be included in the imputation model</li>
+<li>Include the variables that are related to the nonresponse (e.g.&nbsp;of which distributions differ between the response and nonresponse groups, check correlation using response indicator of that variable)</li>
+<li>Include variables that explain a considerable amount of variance (identified by their correlation with the target variable)
+<ul>
+<li>create on complete case data set and one with all the missings in it. Compare them to each other with a dummy variable approach, when the variable is missing in one data set and not in another it get a 1. Get a look, which variables are crucial for the missings</li>
+</ul></li>
+<li>Remove variables selected that way that have too many missing values within the subgroup of incomplete cases (measured by percentage of observed cases within this subgroup)
+<ul>
+<li>ONLY when this are additional model, not when they are part of the substantial model</li>
+</ul></li>
+</ul></li>
+<li>A useful feature of the <code>mice</code> function is the ability to specify the set of predictors to be used for each incomplete variable
+<ul>
+<li>The basic specification is made through the <code>predictorMatrix</code> argument, which is a square matrix of size <code>ncol(data)</code> containing 0/1 data</li>
+<li>Each row in “predictorMatrix” identifies which predictors are to be used for the variable in the row name The mice package contains several tools that aid in automatic predictor selection</li>
+<li>The <code>quickpred()</code> function is a quick way to define the predictor matrix using the strategy outlined above</li>
+</ul></li>
+<li>The <code>mice()</code> function detects multicollinearity, and solves the problem by removing one or more predictors for the model. (Each removal is noted in the <code>loggedEvents</code> element, see below.) → very helpful to look what is removed!</li>
+</ul>
+<section id="exercise" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="exercise"><span class="header-section-number">4.8.1</span> Exercise</h3>
+<p>Have a look at the predictor matrix that mice uses by default. Do you think that it makes sense regarding every aspect?</p>
+<p>The prediction matrix in <a href="#sec-ex.fully" class="quarto-xref"><span>Section 4.7.3</span></a> shows the default setting, in which the square matrix of <code>ncol(data)</code> rows and columns with all 1’s, except for the diagonal. Note: For two-level imputation models (which have “2l” in their names) other codes (e.g, 2 or -2) are also allowed. This does not make a lot of sense, especially for the variable id, which is no predictor at all. It does not make sense either, that age can be predicted by gender or migration background or other variables. The same is true for sex and other variables.</p>
+<p>I can change the prediction matrix by hand with the following steps (for more description see <a href="https://www.nerler.com/teaching/fgme2019/mimice#predictor_matrix">here</a>, Prediction Matrix Task 2)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pred[, <span class="st">"id"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#id is not used as a predictor for the others</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"id"</span>, ] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#id cannot be predicted by the others</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"sex"</span>, ] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#sex can not be predicted</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"comp"</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>) <span class="co"># would assume that competence can be predicted by this values with a 1</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"eduMother"</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>) <span class="co"># would assume such relationships</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"age"</span>, ] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># can not be predicted</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"mig"</span>, ] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#  can not be predicted</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"specialNeeds"</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>) <span class="co"># would assume such relationships</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"cognAb"</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>) <span class="co"># would assume such relationships</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>pred[<span class="st">"GY"</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>) <span class="co"># would assume such relationships</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             id grade sex comp eduMother age mig specialNeeds cognAb GY
+id            0     0   0    0         0   0   0            0      0  0
+grade         0     0   1    1         1   1   1            1      1  1
+sex           0     0   0    0         0   0   0            0      0  0
+comp          0     1   0    0         1   0   1            1      1  1
+eduMother     0     0   0    1         0   1   1            0      1  1
+age           0     0   0    0         0   0   0            0      0  0
+mig           0     0   0    0         0   0   0            0      0  0
+specialNeeds  0     1   0    1         1   0   1            0      1  1
+cognAb        0     1   0    1         1   1   1            1      0  1
+GY            0     0   0    1         1   0   1            1      1  0</code></pre>
+</div>
+</div>
+<p>Use the <code>quickpred()</code> of mice.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quickpred</span>(DAT) <span class="co"># Selects predictors according to simple statistics</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             id grade sex comp eduMother age mig specialNeeds cognAb GY
+id            0     0   0    0         0   0   0            0      0  0
+grade         1     0   1    1         1   1   1            1      1  1
+sex           0     0   0    0         0   0   0            0      0  0
+comp          1     1   1    0         1   1   1            1      1  1
+eduMother     1     1   0    1         0   1   1            0      1  1
+age           0     0   0    0         0   0   0            0      0  0
+mig           1     1   0    1         0   0   0            0      1  1
+specialNeeds  0     0   0    1         0   1   0            0      1  1
+cognAb        0     1   0    1         1   1   1            1      0  1
+GY            0     0   0    0         0   0   0            0      0  0</code></pre>
+</div>
+</div>
+<p>Huge difference to my hand made prediction matrix. While sex and age can’t also here be computed, in this matrix GY can’t but migration. Furthermore, id can be a predictor in here, the mothers education can be predicted from the grade and the age, what does not make a lot of sense.</p>
+<p>Therefore, in the next step we stricten the criteria:</p>
+<p>Redo imputation and analysis, considering only values with 40 percent usable cases. Hint: For this use the argument <code>minpuc</code> in the <code>quickpred</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quickpred</span>(DAT, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">mincor =</span> <span class="fl">0.4</span>) <span class="co"># all predictors with absolute correlation over 0.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             id grade sex comp eduMother age mig specialNeeds cognAb GY
+id            0     0   0    0         0   0   0            0      0  0
+grade         0     0   0    1         0   0   0            0      0  0
+sex           0     0   0    0         0   0   0            0      0  0
+comp          0     1   0    0         0   0   0            0      1  1
+eduMother     0     0   0    0         0   0   0            0      0  0
+age           0     0   0    0         0   0   0            0      0  0
+mig           0     0   0    0         0   0   0            0      0  0
+specialNeeds  0     0   0    0         0   0   0            0      0  0
+cognAb        0     0   0    1         0   0   0            0      0  0
+GY            0     0   0    0         0   0   0            0      0  0</code></pre>
+</div>
+</div>
+<p>Now, the predictionMatrix looks quite different and only a few variables can be used for prediction. This criterion could be a bit to strict, then we loose predictive power. BUT: This can also be a hint of multicollinearity between the variables.</p>
+<p>Do you detect multicollinearity hindering feasible imputation?</p>
+<p>We can check this with a correlation matrix:</p>
+<p>No correlation is above 0.6. I wonder a bit about the huge deviation from the predicitonMatrix. Why is GY in the predictionMatrix not predicted by comp, but in here?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(DAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(DAT, <span class="at">use=</span><span class="st">"na.or.complete"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        id       grade           sex        comp    eduMother
+id            1.0000000000 -0.09368735 -0.0007952184  0.05464007  0.037915306
+grade        -0.0936873543  1.00000000 -0.2465051450 -0.40732044 -0.114182264
+sex          -0.0007952184 -0.24650515  1.0000000000  0.23628199 -0.008284387
+comp          0.0546400740 -0.40732044  0.2362819871  1.00000000  0.158323730
+eduMother     0.0379153058 -0.11418226 -0.0082843875  0.15832373  1.000000000
+age           0.0007907618  0.17967951 -0.0836541092 -0.24776020 -0.134213163
+mig          -0.0760558585  0.12243852 -0.0095102820 -0.11902221 -0.036304492
+specialNeeds -0.0126538053  0.07489106 -0.0424774084 -0.13974678 -0.018240552
+cognAb        0.0228079067 -0.19708916 -0.0176951858  0.39416113  0.144073575
+GY            0.0435209049 -0.15791329  0.0469059471  0.50678735  0.248731327
+                       age          mig specialNeeds      cognAb          GY
+id            0.0007907618 -0.076055858  -0.01265381  0.02280791  0.04352090
+grade         0.1796795123  0.122438516   0.07489106 -0.19708916 -0.15791329
+sex          -0.0836541092 -0.009510282  -0.04247741 -0.01769519  0.04690595
+comp         -0.2477602019 -0.119022215  -0.13974678  0.39416113  0.50678735
+eduMother    -0.1342131632 -0.036304492  -0.01824055  0.14407358  0.24873133
+age           1.0000000000  0.088253513   0.12889415 -0.17932327 -0.24343696
+mig           0.0882535126  1.000000000  -0.01175476 -0.10682109 -0.05518325
+specialNeeds  0.1288941489 -0.011754759   1.00000000 -0.09692705 -0.09833512
+cognAb       -0.1793232697 -0.106821087  -0.09692705  1.00000000  0.36289332
+GY           -0.2434369606 -0.055183250  -0.09833512  0.36289332  1.00000000</code></pre>
+</div>
+</div>
+<p><strong>Why is multicollinearity a problem for model imputation?</strong></p>
+<p>Multicollinearity in predictors can impact the imputation of missing data in a model. Imputation models aim to use as much information as possible to obtain the estimates required to complete any missing data. This is founded on the assumption that the data is missing at random. Therefore, overfitting the imputation models is less of a problem as any available associations, small or large are used. If these associations are estimated with large error, it will be reflected in the variance across imputation sets and taken into account when properly pooling analysis results.</p>
+<p>This reasoning applies to multicollinearity as well. However, in situations of high multicollinearity, there might be practical implications as your computer might not be able to fit the model at all. In such cases, you might have to ‘dumb down’ your model or use a less multicollinearity sensitive model. The presence of multicollinearity can also lead to numerical problems with imputation algorithms.</p>
+<p>Sources: https://stats.stackexchange.com/questions/278672/is-multicollinearity-problematic-for-imputation-models https://ete-online.biomedcentral.com/articles/10.1186/s12982-021-00095-3</p>
+<p>Because 0.25 could be a bit to harsh, we go with 0.25, what indicates a medium correlation. Additionally, we go with the default of 5 imputations in 5 iterations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(DAT, <span class="at">pred =</span> <span class="fu">quickpred</span>(DAT, <span class="at">minpuc =</span> <span class="fl">0.25</span>, <span class="co">#A scalar, vector (of size ncol(data)) or matrix (square, of size ncol(data) specifying the minimum threshold(s) for the proportion of usable cases.</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">exclude=</span><span class="st">"id"</span>), </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">method=</span>meth) <span class="co">#although it wasn't in the R File I added the method argument, so we have the same methods as in the model before</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  1   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  2   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  3   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  4   5  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   1  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   2  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   3  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   4  grade  comp  eduMother  mig  specialNeeds  cognAb
+  5   5  grade  comp  eduMother  mig  specialNeeds  cognAb</code></pre>
+</div>
+</div>
+<p>In the next step we pool the coefficients of the regression models on the 4 imputed data sets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit_ex2 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp, <span class="at">exp=</span><span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term   estimate  std.error statistic        df      p.value
+1 (Intercept)  3.1139346 0.01390008 224.02273  65.20258 7.538822e-96
+2        comp -0.2975177 0.01015659 -29.29307  14.40224 3.045094e-14
+3         sex -0.2712933 0.01765091 -15.36993 123.83933 1.747964e-30
+4   eduMother -0.1272092 0.02171720  -5.85753  71.79517 1.306656e-07</code></pre>
+</div>
+</div>
+<p>What we can see in comparison to the complete case analysis and the first model with imputed data is, that the coefficients are still the same. But: Standard Error and p-value are decreased a lot.</p>
+<p>To access the coefficients for linear regressions on the imputed data sets on its own, this lines of code are needed. So we can get a look how much the coefficients differ.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(grade<span class="sc">~</span>comp<span class="sc">+</span>sex<span class="sc">+</span>eduMother, <span class="at">data=</span><span class="fu">complete</span>(imp, <span class="at">action=</span><span class="dv">5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = grade ~ comp + sex + eduMother, data = complete(imp, 
+    action = 5))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.03520 -0.55835 -0.01148  0.53959  3.02601 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.12263    0.01211 257.866  &lt; 2e-16 ***
+comp        -0.29025    0.00700 -41.467  &lt; 2e-16 ***
+sex         -0.27579    0.01604 -17.198  &lt; 2e-16 ***
+eduMother   -0.13683    0.01897  -7.212 5.89e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8015 on 10527 degrees of freedom
+Multiple R-squared:  0.1998,    Adjusted R-squared:  0.1996 
+F-statistic: 876.4 on 3 and 10527 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="derived-variables" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="derived-variables"><span class="header-section-number">4.9</span> Derived Variables</h2>
+<p>Example: e.g.&nbsp;weight / height ratio defined <span class="math inline">\(whr = wgt/hgt\)</span></p>
+<p>How to deal with the derived information?</p>
+<p>Compute the derived variabdle first and then impute does not work. Derived the imputation afterwards does not work.</p>
+<ul>
+<li>If any one of the triplet, s missing, then the missing value can be calculated with certainty by a simple deterministic rule.</li>
+<li>Approach known as impute, then transform (von Hippel 2009)</li>
+<li>Obvious problem: observations in e.g.&nbsp;whr not used by the imputation model → biases the estimates of parameters related to whr towards zero</li>
+</ul>
+<p>A way, that is better than the others is</p>
+<section id="passive-imputation" class="level3" data-number="4.9.1">
+<h3 data-number="4.9.1" class="anchored" data-anchor-id="passive-imputation"><span class="header-section-number">4.9.1</span> passive imputation</h3>
+<p>Transformation is done on-the-fly within the imputation algorithm</p>
+<ul>
+<li>Since the transformed variable is available for imputation, the hope is that passive imputation removes the bias of the Impute, then transform methods</li>
+<li>while restoring consistency among the imputations that was broken in JAV (create derived variable first and impute just as another variable (JAV))</li>
+</ul>
+<p><img src="figures/3.passive.png" class="img-fluid"></p>
+<p>→ not of the procedures are perfect, but this is the best we have</p>
+<p>→ Neither of the methods introduced so far works well for imputing the ratio <span class="math inline">\(whr\)</span></p>
+<p>Beware: <span class="math inline">\(whr\)</span> has to be a column after <span class="math inline">\(hgt\)</span> and <span class="math inline">\(wgt\)</span> to be updated based on the newly imputed <span class="math inline">\(hgt\)</span> and <span class="math inline">\(wgt\)</span> values in the related iteration step</p>
+<section id="excercise" class="level4" data-number="4.9.1.1">
+<h4 data-number="4.9.1.1" class="anchored" data-anchor-id="excercise"><span class="header-section-number">4.9.1.1</span> Excercise</h4>
+<p>Use <strong>‘Passive imputation’</strong> as imputation technique for the interaction term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create data set with derived variable eduMSex (an interaction term)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>DAT_ext <span class="ot">&lt;-</span> DAT</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>DAT_ext<span class="sc">$</span>eduMSex <span class="ot">&lt;-</span> DAT<span class="sc">$</span>eduMother <span class="sc">*</span> DAT<span class="sc">$</span>sex</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#compute a complete cases analysis with the derived variable as a predictor (interaction term)</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>cc_ex3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother <span class="sc">+</span> eduMSex, <span class="at">data=</span>DAT_ext)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cc_ex3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = grade ~ comp + sex + eduMother + eduMSex, data = DAT_ext)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.09063 -0.55242 -0.01419  0.53217  2.84182 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.07666    0.01681 183.044   &lt;2e-16 ***
+comp        -0.30564    0.01034 -29.573   &lt;2e-16 ***
+sex         -0.26063    0.02385 -10.927   &lt;2e-16 ***
+eduMother   -0.06657    0.03460  -1.924   0.0544 .  
+eduMSex     -0.11088    0.04853  -2.285   0.0224 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7902 on 5954 degrees of freedom
+  (4572 observations deleted due to missingness)
+Multiple R-squared:  0.1942,    Adjusted R-squared:  0.1936 
+F-statistic: 358.7 on 4 and 5954 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The interaction term is significant negative and decreases the still significant negative effect of mothers education. So if a pupil is female and has a higher educated mother the probability to get better grades increases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fit_ex3 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp_pas, <span class="at">exp=</span><span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother <span class="sc">+</span> eduMSex))</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term    estimate   std.error  statistic         df       p.value
+1 (Intercept)  3.10476854 0.014485763 214.332408  70.701244 3.311248e-101
+2        comp -0.29533933 0.007955626 -37.123330  76.543029  1.061616e-50
+3         sex -0.26019946 0.020228856 -12.862787  80.955385  2.905715e-21
+4   eduMother -0.08185273 0.053831933  -1.520524   7.342119  1.702088e-01
+5     eduMSex -0.10163749 0.041408408  -2.454513 352.872999  1.458981e-02</code></pre>
+</div>
+</div>
+<p>In comparison to the complete cases model with the interaction term included we can see slightly different coefficients. The deviation of the coefficients are very, very small, though. But in the imputed model we have much lower p-values and a bit smaller standard errors.</p>
+<p>Another way to impute derived variables:</p>
+</section>
+</section>
+<section id="rejection-sampling" class="level3" data-number="4.9.2">
+<h3 data-number="4.9.2" class="anchored" data-anchor-id="rejection-sampling"><span class="header-section-number">4.9.2</span> Rejection Sampling</h3>
+<ul>
+<li>Create imputations that are congenial with the substantive (complete-data) model</li>
+<li>The imputation method requires a specification of the complete-data model</li>
+<li>Bartlett, J. W., S. R. Seaman, I. R. White, and J. R. Carpenter. 2015. “Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.” Statistical Methods in Medical Research 24 (4): 462–87.</li>
+</ul>
+<section id="exercise-1" class="level4" data-number="4.9.2.1">
+<h4 data-number="4.9.2.1" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">4.9.2.1</span> Exercise</h4>
+<p>Use <strong>‘Rejection Sampling for Imputation’</strong> as imputation technique for the interaction term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove first column (the id, because not a predictor)</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>DATs_ext <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(DAT_ext[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">#for each variable in the data set you define a model like in mice!</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>meth <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">""</span>, <span class="st">"norm"</span>, <span class="st">"logreg"</span>, <span class="st">""</span>, <span class="st">"logreg"</span>, <span class="st">"logreg"</span>, <span class="st">"norm"</span>, <span class="st">""</span>, <span class="st">"eduMother*sex"</span>) </span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co">#impute and define complete cases model</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>imps <span class="ot">&lt;-</span> <span class="fu">smcfcs</span>(<span class="at">originaldata =</span> DATs_ext, <span class="at">meth =</span> meth, <span class="at">smtype =</span> <span class="st">"lm"</span>,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">smformula =</span> <span class="st">"grade ~ comp + sex + eduMother + eduMSex"</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">m=</span><span class="dv">5</span>, <span class="at">rjlimit =</span> <span class="dv">15000</span>, <span class="at">numit =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Outcome variable(s): grade"
+[1] "Passive variables: eduMSex"
+[1] "Partially obs. variables: comp,eduMother,mig,specialNeeds,cognAb"
+[1] "Fully obs. substantive model variables: sex"
+[1] "Imputation  1"
+[1] "Imputing missing outcomes using specified substantive model."
+[1] "Imputing:  comp  using  eduMother,mig,specialNeeds,cognAb,sex  plus outcome"
+[1] "Imputing:  eduMother  using  comp,mig,specialNeeds,cognAb,sex  plus outcome"
+[1] "Imputing:  mig  using  comp,eduMother,specialNeeds,cognAb,sex  plus outcome"
+[1] "Imputing:  specialNeeds  using  comp,eduMother,mig,cognAb,sex  plus outcome"
+[1] "Imputing:  cognAb  using  comp,eduMother,mig,specialNeeds,sex  plus outcome"
+[1] "Imputation  2"
+[1] "Imputation  3"
+[1] "Imputation  4"
+[1] "Imputation  5"</code></pre>
+</div>
+</div>
+<p>Very good method, because handle the interaction better! Similar to <code>mice</code>, but this method is not useful for multi level modeling!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make regressions for all imputated data sets</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>fit_s <span class="ot">&lt;-</span> <span class="fu">lapply</span>(imps<span class="sc">$</span>impDatasets, lm,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother <span class="sc">+</span> eduMSex)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pool the models</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term    estimate  std.error  statistic         df      p.value
+1 (Intercept)  3.10259949 0.01307367 237.316602 1241.24967 0.000000e+00
+2        comp -0.30462155 0.00901524 -33.789620   25.07864 1.952160e-22
+3         sex -0.24802686 0.02039486 -12.161242   75.82634 1.708761e-19
+4   eduMother -0.07921871 0.03391365  -2.335894   26.03366 2.747000e-02
+5     eduMSex -0.12311174 0.05561163  -2.213777   13.73100 4.430166e-02</code></pre>
+</div>
+</div>
+<p>Also in this model the coefficients are quite the same as in the other models. p-values and standard errors are also very small in comparison to the complete case model.</p>
+<p>→ both models are an improvement in comparison to the complete cases model and shows, that the model coefficients are robust, because MAR holds.</p>
+</section>
+</section>
+</section>
+<section id="interaction-terms-quadratic-relations" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="interaction-terms-quadratic-relations"><span class="header-section-number">4.10</span> Interaction Terms &amp; Quadratic Relations</h2>
+<p>The standard MICE algorithm only models main effects</p>
+<ul>
+<li>For categorical data: imputing the data in separate groups, i.e.&nbsp;by splitting the dataset into two or more parts, run “mice” on each part</li>
+<li>Generic methods to preserve interactions include tree-based regression and classification</li>
+<li>Again: Rejection Sampling for Imputation is doing a better job than ‘transform then impute’, ‘JAV’, or ‘passive imputation’</li>
+</ul>
+<p>Passive imputation cannot handle interaction and quadratic terms, but <code>mice</code></p>
+<p>One way to analyze nonlinear relations by a linear model is to include quadratic or cubic versions of the explanatory variables into the model. - Not working well: ‘transform then impute’, ‘JAV’, ‘passive imputation’ - Idea: impute polynomial combination <span class="math inline">\(Z = Y β_1 + Y^2β_2\)</span> instead of <span class="math inline">\(Y\)</span> and <span class="math inline">\(Y^2\)</span> → shown by simulation, does a good job! - Approach available in ‘mice’ as method ‘quadratic’ - The idea can be generalized to polynomial bases of higher orders</p>
+<section id="exercise-2" class="level3" data-number="4.10.1">
+<h3 data-number="4.10.1" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">4.10.1</span> Exercise</h3>
+<p>Analysis model: <span class="math inline">\(grade_i = β_0 + β_1comp_i + β_2sex_i + β_3eduMother_i + β_4sex_i × eduMother_i + ϵ_i\)</span></p>
+<ol type="1">
+<li>Use ‘Passive imputation’ as imputation technique for the interaction term.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>DAT_ext <span class="ot">&lt;-</span> DAT</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>DAT_ext<span class="sc">$</span>eduMSex <span class="ot">&lt;-</span> DAT<span class="sc">$</span>eduMother <span class="sc">*</span> DAT<span class="sc">$</span>sex</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>cc_ex3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother <span class="sc">+</span> eduMSex, <span class="at">data=</span>DAT_ext)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cc_ex3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = grade ~ comp + sex + eduMother + eduMSex, data = DAT_ext)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.09063 -0.55242 -0.01419  0.53217  2.84182 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.07666    0.01681 183.044   &lt;2e-16 ***
+comp        -0.30564    0.01034 -29.573   &lt;2e-16 ***
+sex         -0.26063    0.02385 -10.927   &lt;2e-16 ***
+eduMother   -0.06657    0.03460  -1.924   0.0544 .  
+eduMSex     -0.11088    0.04853  -2.285   0.0224 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7902 on 5954 degrees of freedom
+  (4572 observations deleted due to missingness)
+Multiple R-squared:  0.1942,    Adjusted R-squared:  0.1936 
+F-statistic: 358.7 on 4 and 5954 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conditional-imputation" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="conditional-imputation"><span class="header-section-number">4.11</span> Conditional Imputation</h2>
+<p>In some cases it makes sense to restrict the imputations, possibly conditional on other data</p>
+<ul>
+<li>E.g one way of dealing with a mismatch between imputed and observed values is to censor the values at some specified minimum or maximum value</li>
+<li>Idea: Adjust/correct inconsistent imputed values ex-post in certain limits</li>
+</ul>
+<section id="exercise-3" class="level3" data-number="4.11.1">
+<h3 data-number="4.11.1" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">4.11.1</span> Exercise</h3>
+<p>create the model by split in very bad and very good students.</p>
+<ol type="1">
+<li>create a new data set with a new variable only with pupils with bad grades</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>DAT_b <span class="ot">&lt;-</span> DAT</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>DAT_b<span class="sc">$</span>grade56 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(DAT<span class="sc">$</span>grade <span class="sc">%in%</span> <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fu">ifelse</span>(DAT<span class="sc">$</span>grade <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>), <span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(DAT_b<span class="sc">$</span>grade56, <span class="at">exclude=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 &lt;NA&gt; 
+9332  351  848 </code></pre>
+</div>
+</div>
+<p>Only 351 pupils have bad grades from overall 10531 pupils.</p>
+<ol start="2" type="1">
+<li>Complete Case Model only with bad grades</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>cc_ex3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(grade56 <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>), <span class="at">data=</span>DAT_b)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cc_ex3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = grade56 ~ comp + sex + eduMother, family = binomial(link = "logit"), 
+    data = DAT_b)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -3.71840    0.13355 -27.843  &lt; 2e-16 ***
+comp        -0.78864    0.07555 -10.439  &lt; 2e-16 ***
+sex         -0.57516    0.19565  -2.940  0.00329 ** 
+eduMother   -0.06255    0.22161  -0.282  0.77774    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1349.3  on 5958  degrees of freedom
+Residual deviance: 1209.9  on 5955  degrees of freedom
+  (4572 observations deleted due to missingness)
+AIC: 1217.9
+
+Number of Fisher Scoring iterations: 7</code></pre>
+</div>
+</div>
+<p>Interestingly, in this model <code>comp</code> and <code>sex</code> are still negatively sigificant, <code>eduMother</code> is not.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create on imputed data set</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(DAT_b, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  grade  comp  eduMother  mig  specialNeeds  cognAb  grade56</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define the methods</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>meth <span class="ot">&lt;-</span> imp<span class="sc">$</span>method</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>meth[<span class="st">"eduMother"</span>] <span class="ot">&lt;-</span> meth[<span class="st">"mig"</span>] <span class="ot">&lt;-</span> meth[<span class="st">"specialNeeds"</span>] <span class="ot">&lt;-</span> <span class="st">"logreg"</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>DAT_b<span class="sc">$</span>eduMother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(DAT_b<span class="sc">$</span>eduMother)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>DAT_b<span class="sc">$</span>mig <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(DAT_b<span class="sc">$</span>eduMother)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>DAT_b<span class="sc">$</span>specialNeeds <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(DAT_b<span class="sc">$</span>specialNeeds)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>meth[<span class="st">"grade56"</span>] <span class="ot">&lt;-</span> <span class="st">""</span> <span class="co">#not imputed, because derived information done in the imputation</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> imp<span class="sc">$</span>predictorMatrix</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>pred[, <span class="st">"id"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>pred[, <span class="st">"grade56"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># not using grade56 for imputing other variables</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">make.post</span>(DAT_b) <span class="co">#create post as a helper for the argument in mice, specifies post-processing for a variable after each iteration of imputation</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>post[<span class="st">"grade56"</span>] <span class="ot">&lt;-</span> <span class="st">"ifdo(grade %in% c(5,6), grade %in% (1,2,3,4)), c(1,0)"</span> <span class="co">#including the post adjustment in splitting in good grades and bad</span></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="co">#impute data 5 times including the post processing</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>imp_post <span class="ot">&lt;-</span> <span class="fu">mice</span>(DAT_b, <span class="at">predictorMatrix =</span> pred, <span class="at">meth=</span>meth, <span class="at">post=</span>post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  grade  comp  eduMother  specialNeeds  cognAb
+  1   2  grade  comp  eduMother  specialNeeds  cognAb
+  1   3  grade  comp  eduMother  specialNeeds  cognAb
+  1   4  grade  comp  eduMother  specialNeeds  cognAb
+  1   5  grade  comp  eduMother  specialNeeds  cognAb
+  2   1  grade  comp  eduMother  specialNeeds  cognAb
+  2   2  grade  comp  eduMother  specialNeeds  cognAb
+  2   3  grade  comp  eduMother  specialNeeds  cognAb
+  2   4  grade  comp  eduMother  specialNeeds  cognAb
+  2   5  grade  comp  eduMother  specialNeeds  cognAb
+  3   1  grade  comp  eduMother  specialNeeds  cognAb
+  3   2  grade  comp  eduMother  specialNeeds  cognAb
+  3   3  grade  comp  eduMother  specialNeeds  cognAb
+  3   4  grade  comp  eduMother  specialNeeds  cognAb
+  3   5  grade  comp  eduMother  specialNeeds  cognAb
+  4   1  grade  comp  eduMother  specialNeeds  cognAb
+  4   2  grade  comp  eduMother  specialNeeds  cognAb
+  4   3  grade  comp  eduMother  specialNeeds  cognAb
+  4   4  grade  comp  eduMother  specialNeeds  cognAb
+  4   5  grade  comp  eduMother  specialNeeds  cognAb
+  5   1  grade  comp  eduMother  specialNeeds  cognAb
+  5   2  grade  comp  eduMother  specialNeeds  cognAb
+  5   3  grade  comp  eduMother  specialNeeds  cognAb
+  5   4  grade  comp  eduMother  specialNeeds  cognAb
+  5   5  grade  comp  eduMother  specialNeeds  cognAb</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Number of logged events: 1</code></pre>
+</div>
+</div>
+<p>In my comptutation is in <code>imp_post</code> not a warning, only in <code>imp</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>imp_post<span class="sc">$</span>loggedEvents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  it im dep      meth out
+1  0  0     collinear mig</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>loggedEvents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>So, if we go with the imp data sets we should take migration out, because it is colinear to bad grades.</p>
+<pre><code>DAT_b &lt;- DAT_b %&gt;% dplyr::select(-mig)</code></pre>
+<p>Here the model for the imp data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>imp1 <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">complete</span>(imp_post, <span class="at">complete=</span><span class="dv">1</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>fit_ex4 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp_post, <span class="at">exp=</span><span class="fu">glm</span>(grade56 <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex4))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term     estimate   std.error   statistic         df      p.value
+1 (Intercept)  0.040635170 0.003007331  13.5120397  521.28261 6.969487e-36
+2        comp -0.032091890 0.002113474 -15.1844257   31.53910 4.710283e-16
+3         sex -0.009261914 0.003862560  -2.3978694 4693.91365 1.652957e-02
+4  eduMother1 -0.001649512 0.005135410  -0.3212036   85.01737 7.488444e-01</code></pre>
+</div>
+</div>
+<p><em>Open question:</em> What is the function complete for? Can’t find an explanation for the argument <code>complete=1</code>, only for <code>complete</code> itself. Does it extract the completed data and 1 means, we only want the completed cases?</p>
+<p>Compared to the complete cases model <code>cc_ex3</code> this model has totally different cofficients. In the imputed model competence doesn’t have a huge effect, neither sex nor mothers education. This shows, it really makes a difference how you deal with the missingness! While this model account for the missingness, the complete case analysis does not do.</p>
+</section>
+<section id="mice-extensions" class="level3" data-number="4.11.2">
+<h3 data-number="4.11.2" class="anchored" data-anchor-id="mice-extensions"><span class="header-section-number">4.11.2</span> Mice Extensions</h3>
+<p>Skipping imputations</p>
+<ul>
+<li>In some cases it may also be useful to skip imputation of certain cells e.g.&nbsp;skip imputation of quality of life for the deceased</li>
+<li>Creates missing data in the predictors: (i) remove the predictor from all imputation models OR (ii) missing values have to propagated through the algorithm</li>
+<li>van Hippel (2007): delete imputed dependent variable values before conducting regression estimation (yields more efficient estimates), called MID (multiple imputation than deletion) approach</li>
+</ul>
+<p>Overimputation</p>
+<ul>
+<li>Imputing cells with observed data</li>
+<li>E.g. for evaluating whether observed data point fits the imputation model (meanwhile implemented in R package mice, “where” argument)</li>
+</ul>
+</section>
+</section>
+<section id="hybrid-imputation" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="hybrid-imputation"><span class="header-section-number">4.12</span> Hybrid imputation</h2>
+<p>For some cases, it is the best solution to do a joint modelling like for grades and competence or special needs and language, therefore hybrid imputation is the right strategy.</p>
+<p>Combine JM and FCS</p>
+<ul>
+<li>Remember: JM imputes all variables at once &amp; FCS imputes each variable separately In actual data: variables might be interrelated (e.g., set of scale items, two variables with interaction terms, compositions adding up to a total)</li>
+<li>Impute interrelated variables as a block</li>
+<li>Partition complete set of variables into blocks and impute all variables in the same block jointly</li>
+<li>In the <code>mice</code> package: <code>block</code>argument: MICE algo iterates over blocks rather than variables</li>
+<li><strong>Block sequential regression</strong> multivariate imputation (see Zhu, J. 2016. Assessment and Improvement of a Sequential Regression Multivariate Imputation Algorithm. PhD thesis, University of Michigan):</li>
+<li>units are partitioned into blocks according to the missing data pattern</li>
+<li>imputation model for a given variable is modified for each block (only the observed data with the block serves as predictor)</li>
+</ul>
+<section id="exercise-4" class="level3" data-number="4.12.1">
+<h3 data-number="4.12.1" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">4.12.1</span> Exercise</h3>
+<p>Analysis model: <span class="math display">\[
+grade_i = β_0 + β_1comp_i + β_2sex_i + β_3eduMother_i + ϵ_i
+\]</span> Analyse that model using imputed data. In doing so, impute <code>grade</code> and <code>comp</code> by joint modelling and also <code>mig</code> and <code>specialNeeds</code> (using the block command of the mice function). At this, specify <code>grade56</code> ex post.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>DAT_bl <span class="ot">&lt;-</span> DAT[,<span class="sc">-</span><span class="dv">1</span>] <span class="co">#exclude index from data set</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>DAT_bl<span class="sc">$</span>grade56 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(DAT<span class="sc">$</span>grade <span class="sc">%in%</span> <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fu">ifelse</span>(DAT<span class="sc">$</span>grade <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>), <span class="dv">1</span>,<span class="dv">0</span>)) <span class="co">#create binary for bad grades</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>bl <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">bl1=</span><span class="fu">c</span>(<span class="st">"grade"</span>, <span class="st">"comp"</span>), <span class="co">#define interrelated variables</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">bl2=</span><span class="fu">c</span>(<span class="st">"eduMother"</span>), <span class="at">bl3=</span><span class="fu">c</span>(<span class="st">"mig"</span>, <span class="st">"specialNeeds"</span>), <span class="at">bl4=</span><span class="fu">c</span>(<span class="st">"cognAb"</span>))</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>imp_block <span class="ot">&lt;-</span> <span class="fu">mice</span>(DAT_bl, <span class="at">blocks=</span>bl, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  grade comp  eduMother  mig specialNeeds  cognAb</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create  imputed model</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>fit_ex5 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp_post, <span class="at">exp=</span><span class="fu">lm</span>(grade56 <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex5))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term     estimate   std.error   statistic         df      p.value
+1 (Intercept)  0.040635170 0.003007331  13.5120397  521.28261 6.969487e-36
+2        comp -0.032091890 0.002113474 -15.1844257   31.53910 4.710283e-16
+3         sex -0.009261914 0.003862560  -2.3978694 4693.91365 1.652957e-02
+4  eduMother1 -0.001649512 0.005135410  -0.3212036   85.01737 7.488444e-01</code></pre>
+</div>
+</div>
+<p>Compared to the pooled <code>fit_ex4</code> results, the values are very similar to each other, not only the coefficients, but also the standard errors and the p-value. The assumed interrelatedness between some variables does not make a huge difference. The results differs a lot in comparison to <code>cc_ex3</code>, which uses only the complete cases.</p>
+</section>
+</section>
+<section id="longitudinal-data" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="longitudinal-data"><span class="header-section-number">4.13</span> Longitudinal data</h2>
+<ul>
+<li>Longitudinal data can be coded into “long” and “wide” formal</li>
+<li>Wide format: each micro unit/individual has a row, observation of distinct time points are coded as accordant variables (e.g.&nbsp;‘employ.2020’, ‘employ.2021’, etc.)</li>
+<li>Long format: multiple lines for each micro unit/individual; one line for each time point; constant variables have the same values in each line; time variable required</li>
+<li>In both formats there is an identification variable (‘id’)</li>
+<li>Advantage long format: can handle unbalanced panel designs</li>
+<li>Advantage wide format: standard software methods can easily be applied to that data</li>
+<li>In statistical software: Wide-to-Long conversion is not really a problem</li>
+<li>Long-to-wide conversion can be quite cumbersome: If the data is highly unbalanced there will be many missing values in the wide format data</li>
+</ul>
+<p>Emphasized:</p>
+<ul>
+<li>Use wide format for imputation and apply single level MI (mice) techniques MI (mice) can also be done on long data; then use multi-level MI (mice) methods</li>
+<li>However : When imputing data in long format, you loose the ‘order’ information, i.e.&nbsp;time points are ordered; (in multi-level modelling units nested in higher clusters are not considered as being ordered)</li>
+</ul>
+<section id="exercise-5" class="level3" data-number="4.13.1">
+<h3 data-number="4.13.1" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">4.13.1</span> Exercise</h3>
+<p><em>Variables:</em> log wage (lwage); years of full time work experience (exp); weeks worked (wks); 1 if blue-collar occupation, 0 if not (bluecol); 1 if the individual works in a manufactural industry, 0 if not (ind); 1 if the individual resides in the South, 0 if not (south); 1 if the individual resides in an metropolitan area, 0 if not (smsa); 1 if individual is married, 0 if not (married); 1 if the individual wage is set by a union contract, 0 if not (union); years of education (ed); 1 if the individual is female, 0 if not (sex); 1 if the individual is black, 0 if not (black)</p>
+<p>Check missing data pattern &amp; test for MCAR (Hint: “mcar test” works best with data in long format)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read in data from day 2 with manually generated missings</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>lDAT <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/3.Example3.dta"</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># test with Little's missing completely at random test (MCAR)</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mcar_test</span>(lDAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  statistic    df p.value missing.patterns
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;int&gt;
+1      298.    38       0                4</code></pre>
+</div>
+</div>
+<p>The p-value is so small, that MCAR must be rejected. There is no indicator, that the missings differ randomly. We must reject <span class="math inline">\(H_0\)</span>. Looking at the plot before, that is not suprisingly at all.</p>
+<p>How many percentage of the data is missing per variable?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">&lt;-</span> <span class="fu">md.pattern</span>(lDAT, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>miss[<span class="fu">nrow</span>(miss),]<span class="sc">/</span><span class="fu">nrow</span>(lDAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       exp        wks    bluecol        ind      south       smsa    married 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+       sex      union      black         id       time         ed      lwage 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.05042017 0.17286915 
+           
+0.22328932 </code></pre>
+</div>
+</div>
+<p>Missing data in education and <code>lwage</code>. While education is quite negligible, <code>lwage</code>, the variable that should be explained is not!</p>
+<p>Convert data to wide format (it is in long format), e.g.&nbsp;using the <code>reshape2</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>lDAT<span class="sc">$</span>expSq <span class="ot">&lt;-</span> lDAT<span class="sc">$</span>exp <span class="sc">*</span> lDAT<span class="sc">$</span>exp</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>wDAT <span class="ot">&lt;-</span> <span class="fu">reshape</span>(<span class="fu">as.data.frame</span>(lDAT), </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">v.names=</span><span class="fu">c</span>(<span class="st">"lwage"</span>, <span class="st">"exp"</span>, <span class="st">"expSq"</span>, <span class="st">"wks"</span>, <span class="st">"bluecol"</span>, <span class="st">"ind"</span>, <span class="st">"south"</span>, <span class="st">"smsa"</span>, <span class="st">"married"</span>, <span class="st">"union"</span>), </span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">idvar=</span><span class="st">"id"</span>,<span class="at">timevar=</span><span class="st">"time"</span>,</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">direction=</span><span class="st">"wide"</span>)</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co">#how many values are missing overall for each</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">complete.cases</span>(wDAT))<span class="sc">/</span><span class="fu">nrow</span>(wDAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    FALSE      TRUE 
+0.7008403 0.2991597 </code></pre>
+</div>
+</div>
+<p>Only 29 % of the individuals have answered all questions in all years.</p>
+<p>How many percentage of the data is missing per variable in the wide format?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">&lt;-</span> <span class="fu">md.pattern</span>(wDAT, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>miss[<span class="fu">nrow</span>(miss),]<span class="sc">/</span><span class="fu">nrow</span>(wDAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       sex      black         id      exp.1    expSq.1      wks.1  bluecol.1 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+     ind.1    south.1     smsa.1  married.1    union.1      exp.2    expSq.2 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+     wks.2  bluecol.2      ind.2    south.2     smsa.2  married.2    union.2 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+     exp.3    expSq.3      wks.3  bluecol.3      ind.3    south.3     smsa.3 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+ married.3    union.3      exp.4    expSq.4      wks.4  bluecol.4      ind.4 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+   south.4     smsa.4  married.4    union.4      exp.5    expSq.5      wks.5 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+ bluecol.5      ind.5    south.5     smsa.5  married.5    union.5      exp.6 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+   expSq.6      wks.6  bluecol.6      ind.6    south.6     smsa.6  married.6 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+   union.6      exp.7    expSq.7      wks.7  bluecol.7      ind.7    south.7 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+    smsa.7  married.7    union.7         ed    lwage.6    lwage.1    lwage.3 
+0.00000000 0.00000000 0.00000000 0.05042017 0.14789916 0.16470588 0.16638655 
+   lwage.7    lwage.5    lwage.4    lwage.2            
+0.16638655 0.17815126 0.18991597 0.19663866 1.26050420 </code></pre>
+</div>
+</div>
+<p>We can see education is around 5 and only asked once, while the age is asked in every for. While in year 6 are the missings the lowest, there are the highest in year 2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_upset</span>(wDAT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing-data_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see, there are connections between the missing values, even though there are only a few cases, where the question about wage is not answered in 4 years of 7.</p>
+<p><em>Open question</em> : Should we exclude these cases, because it is difficult to impute values, if we only have 3 values to infer from? Or would it only be a problem, if 2 values are left to infere from?</p>
+<ol start="2" type="1">
+<li>Impute missing values using mice; for this use proper imputation techniques</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># firstly, create one imputation</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(wDAT, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  ed  lwage.1  lwage.2  lwage.3  lwage.4  lwage.5  lwage.6  lwage.7</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Number of logged events: 16</code></pre>
+</div>
+</div>
+<p>The function has detected multicollinearity and has removed 16 times the predictors.</p>
+<p>A further explanation for <a href="https://stefvanbuuren.name/fimd/sec-toomany.html"><code>loggedEvents</code></a>:</p>
+<p>The logged events form a structured report that identify problems with the data, and details which corrective actions were taken by <code>mice()</code>. It is a component called <code>loggedEvents</code> of the <code>mids</code> object.</p>
+<p>A variable is removed from the model by internal edits of the predictorMatrix, method, visitSequence and post components of the model. The data are kept intact.</p>
+<p>Note that setting <code>remove.constant = FALSE</code> or <code>remove.collinear = FALSE</code> bypasses usual safety measures in mice, and could cause problems further down the road. If a variable has only <code>NA’s</code>, it is considered a constant variable, and will not be imputed. Setting <code>remove.constant = FALSE</code> will cause numerical problems since there are no observed cases to estimate the imputation model, but such variables can be imputed by passive imputation by specifying the <code>allow.na = TRUE</code> argument.</p>
+<p>During execution of the main algorithm, the entries in loggedEvents can signal the following actions:</p>
+<ul>
+<li>A predictor that is constant or correlates higher than 0.999 with the target variable is removed from the univariate imputation model. The cut-off value can be specified by the threshold argument;</li>
+<li>If all predictors are removed, this is noted in <code>loggedEvents</code>, and the imputation model becomes an intercept-only model;</li>
+<li>The degrees of freedom can become negative, usually because there are too many predictors relative to the number of observed values for the target. In that case, the degrees of freedom are set to 1, and a note is written to <code>loggedEvents</code>.</li>
+</ul>
+<p>Between which variables is multicolinearity or is there a constant in it?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>loggedEvents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   it im     dep      meth     out
+1   0  0         collinear   exp.2
+2   0  0         collinear expSq.2
+3   0  0         collinear   exp.3
+4   0  0         collinear expSq.3
+5   0  0         collinear   exp.4
+6   0  0         collinear expSq.4
+7   0  0         collinear   exp.5
+8   0  0         collinear expSq.5
+9   0  0         collinear   exp.6
+10  0  0         collinear expSq.6
+11  0  0         collinear   exp.7
+12  0  0         collinear expSq.7
+13  1  1 lwage.2       pmm south.4
+14  1  1 lwage.4       pmm south.1
+15  1  1 lwage.5       pmm south.5
+16  1  1 lwage.7       pmm south.4</code></pre>
+</div>
+</div>
+<p>In the first 12 data sets exp or expSq is alternately not imputed (for further explanation look <a href="https://stefvanbuuren.name/fimd/sec-knowledge.html">here</a>.</p>
+<ul>
+<li><p>If <code>exp.x</code> is indicated under the column <code>out</code>, this variable is removed from the model, because its collinear with other <code>exp.x</code> AND/ OR <code>expSq.x</code>. As a result <code>exp.x</code>is not imputed, but <code>expSq.x</code> or the other <code>exp.x</code>. If <code>expSq.x</code> is in the column <code>out</code>, its the other way around.</p></li>
+<li><p>In the imputed data sets 13 to 16 <code>south.x</code> was removed from the imputation model because its collinear with <code>lwage.x</code>. We can override this with the <code>remove.collinear</code> argument.</p></li>
+</ul>
+<p><em>Open question</em>: Why do we include <code>exSq</code> in our imputation model? <code>exSq</code> is computed out of <code>ex</code>, therefore, its a derived variable. Why don’t we impute data first and then compute <code>expSq</code> on the fly with passive or conditional imputation?</p>
+<p>We can go on because it is okay, that there is multicollinearity between the work experience over years and the quadric variable, and it is also okay, that there is multicollinearity between the wage and working in the south.</p>
+<p>Lets have a look at the predictorMatrix, to get a bigger picture:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> imp<span class="sc">$</span>predictorMatrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Open question</em>: Why is it okay, to have such a predictorMatrix in this case? We want to impute data on education and lwage. Why should being in an union helps to predict for example education? In the exercises before with cross-sectional data, we have said, that such a predictiorMatrix makes often no sense and we should check it with <code>quickpred</code>. Also, we should avoid multicollinearity, because otherwise the algorithm will not work. BUT the algorithm works appropriately in the following. I don’t really get that.</p>
+<p>Let’s have a look on the method:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      sex        ed     black        id   lwage.1     exp.1   expSq.1     wks.1 
+       ""     "pmm"        ""        ""     "pmm"        ""        ""        "" 
+bluecol.1     ind.1   south.1    smsa.1 married.1   union.1   lwage.2     exp.2 
+       ""        ""        ""        ""        ""        ""     "pmm"        "" 
+  expSq.2     wks.2 bluecol.2     ind.2   south.2    smsa.2 married.2   union.2 
+       ""        ""        ""        ""        ""        ""        ""        "" 
+  lwage.3     exp.3   expSq.3     wks.3 bluecol.3     ind.3   south.3    smsa.3 
+    "pmm"        ""        ""        ""        ""        ""        ""        "" 
+married.3   union.3   lwage.4     exp.4   expSq.4     wks.4 bluecol.4     ind.4 
+       ""        ""     "pmm"        ""        ""        ""        ""        "" 
+  south.4    smsa.4 married.4   union.4   lwage.5     exp.5   expSq.5     wks.5 
+       ""        ""        ""        ""     "pmm"        ""        ""        "" 
+bluecol.5     ind.5   south.5    smsa.5 married.5   union.5   lwage.6     exp.6 
+       ""        ""        ""        ""        ""        ""     "pmm"        "" 
+  expSq.6     wks.6 bluecol.6     ind.6   south.6    smsa.6 married.6   union.6 
+       ""        ""        ""        ""        ""        ""        ""        "" 
+  lwage.7     exp.7   expSq.7     wks.7 bluecol.7     ind.7   south.7    smsa.7 
+    "pmm"        ""        ""        ""        ""        ""        ""        "" 
+married.7   union.7 
+       ""        "" </code></pre>
+</div>
+</div>
+<p>Because we have only missings in <code>lwage</code> and <code>ed</code>, only for this variables methods are chosen. The <code>pmm</code> algorithm seems appropriate for numeric (<code>lwage</code>) or discrete variables (<code>ed</code>).</p>
+<p>Now we can impute, using this time not 5, but 10 imputation as a default</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co">#with exSq included</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>imp_wide <span class="ot">&lt;-</span> <span class="fu">mice</span>(wDAT, <span class="at">pred=</span>pred, <span class="at">print=</span><span class="cn">FALSE</span>, <span class="at">seed=</span><span class="dv">25641</span>, <span class="at">maxit=</span><span class="dv">10</span>, <span class="at">m=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Number of logged events: 400</code></pre>
+</div>
+</div>
+<p><em>Open question</em>: Again, why are we use <code>expSq</code> and not treat it like a derived variable?</p>
+<ol start="3" type="1">
+<li>Estimate the above model, using the suitable strategy (fixed effects model).</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>resList <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length=</span><span class="dv">10</span>, <span class="at">mode=</span><span class="st">"list"</span>) <span class="co">#object to write estimated model into a list</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co">#write a loop </span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){ </span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#i &lt;- 1</span></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>  dat_i <span class="ot">&lt;-</span> <span class="fu">complete</span>(imp_wide, <span class="at">action =</span>i) <span class="co">#only use competed data</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>  datLong_i <span class="ot">&lt;-</span> <span class="fu">reshape</span>(dat_i, <span class="at">idvar =</span> <span class="st">"id"</span>, <span class="at">varying =</span> <span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">74</span>), <span class="at">direction =</span> <span class="st">"long"</span>) <span class="co">#transform to llong data</span></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>  resList[[i]] <span class="ot">&lt;-</span> <span class="fu">plm</span>(lwage <span class="sc">~</span> exp <span class="sc">+</span> expSq <span class="sc">+</span> wks <span class="sc">+</span> bluecol <span class="sc">+</span> ind <span class="sc">+</span> south <span class="sc">+</span> smsa <span class="sc">+</span> married <span class="sc">+</span> union, </span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">model=</span><span class="st">"within"</span>, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"time"</span>),<span class="at">data=</span>datLong_i) <span class="co"># estimate model </span></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(<span class="fu">as.mira</span>(resList)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.
+The `exponentiate` argument is not supported in the `tidy()` method for `plm` objects and will be ignored.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     term      estimate    std.error  statistic        df       p.value
+1     exp  0.1131887526 2.682510e-03 42.1950927  895.8802 4.114985e-215
+2   expSq -0.0004044265 6.349121e-05 -6.3698027  202.7895  1.245413e-09
+3     wks  0.0006577745 6.864566e-04  0.9582172  260.5186  3.388416e-01
+4 bluecol -0.0183777460 1.540657e-02 -1.1928510  413.6676  2.336115e-01
+5     ind  0.0165492738 1.808501e-02  0.9150823  184.1453  3.613452e-01
+6   south  0.0080990915 4.152673e-02  0.1950332  122.4989  8.456900e-01
+7    smsa -0.0364949530 2.216189e-02 -1.6467435  276.9711  1.007449e-01
+8 married -0.0338298665 2.022101e-02 -1.6730054 1744.6843  9.450550e-02
+9   union  0.0230539122 1.614320e-02  1.4280882 1003.5565  1.535776e-01</code></pre>
+</div>
+</div>
+<p>We have computed a fixed effect model, a partioned regression with a within estimator. So, the coefficients can only indicate the effect of a variable on a individual over time, in other words the dynamics for individuals. In consequence: What doef i.e.&nbsp;experience have for an effect on the wage of an individual?</p>
+<ol start="4" type="1">
+<li>Oppose the model on imputed data and a complete cases analysis. What do you see?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">plm</span>(lwage <span class="sc">~</span> exp <span class="sc">+</span> expSq <span class="sc">+</span> wks <span class="sc">+</span> bluecol <span class="sc">+</span> ind <span class="sc">+</span> south <span class="sc">+</span> smsa <span class="sc">+</span> married <span class="sc">+</span> union, </span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">model=</span><span class="st">"within"</span>, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"time"</span>), <span class="at">data=</span>lDAT) </span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Within Model
+
+Call:
+plm(formula = lwage ~ exp + expSq + wks + bluecol + ind + south + 
+    smsa + married + union, data = lDAT, model = "within", index = c("id", 
+    "time"))
+
+Unbalanced Panel: n = 595, T = 2-7, N = 3445
+
+Residuals:
+     Min.   1st Qu.    Median   3rd Qu.      Max. 
+-1.732757 -0.051162  0.004293  0.058480  1.943546 
+
+Coefficients:
+           Estimate  Std. Error t-value  Pr(&gt;|t|)    
+exp      1.1253e-01  2.8094e-03 40.0558 &lt; 2.2e-16 ***
+expSq   -3.9296e-04  6.2569e-05 -6.2804 3.894e-10 ***
+wks      8.6849e-04  6.8512e-04  1.2676   0.20503    
+bluecol -1.8784e-02  1.5930e-02 -1.1792   0.23843    
+ind      1.8188e-02  1.7828e-02  1.0202   0.30770    
+south    1.8517e-03  3.7109e-02  0.0499   0.96021    
+smsa    -3.2472e-02  2.2201e-02 -1.4626   0.14367    
+married -3.6709e-02  2.1562e-02 -1.7025   0.08877 .  
+union    1.4107e-02  1.7578e-02  0.8026   0.42228    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Total Sum of Squares:    196.67
+Residual Sum of Squares: 69.029
+R-Squared:      0.64901
+Adj. R-Squared: 0.57451
+F-statistic: 583.686 on 9 and 2841 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+</div>
+<p>In both models only <code>exp</code> and <code>expSq</code> are significant in their effects. The estimates are quite similar to each other, but in the imputed model p-values are way more smaller. The cc model makes a good job in this case.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./panel_data.html" class="pagination-link" aria-label="Panel Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
