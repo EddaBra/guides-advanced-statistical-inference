@@ -818,11 +818,11 @@ GY            0     1   1    1         1   1   1            1      1  0</code></
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fit_ex1 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp, <span class="at">exp=</span><span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         term   estimate   std.error  statistic        df       p.value
-1 (Intercept)  3.1136024 0.012982669 239.827604 225.05644 4.196059e-273
-2        comp -0.2986724 0.008347539 -35.779692  43.83768  4.411478e-34
-3         sex -0.2719736 0.017270884 -15.747520 193.26957  1.720737e-36
-4   eduMother -0.1319027 0.020334903  -6.486516 254.89505  4.536220e-10</code></pre>
+<pre><code>         term   estimate  std.error statistic         df      p.value
+1 (Intercept)  3.1157388 0.01246325 249.99419 1139.96278 0.000000e+00
+2        comp -0.3008862 0.01015146 -29.63970   14.54939 2.036001e-14
+3         sex -0.2809813 0.01872659 -15.00440   54.98246 4.326139e-21
+4   eduMother -0.1206408 0.02486912  -4.85103   24.12480 5.987999e-05</code></pre>
 </div>
 </div>
 <p>Not much differences in the coefficients between the imputation model and the complete cases model. The p-values are much more smaller in the imputation model than in the complete cases one.</p>
@@ -1005,11 +1005,11 @@ GY           -0.2434369606 -0.055183250  -0.09833512  0.36289332  1.00000000</co
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit_ex2 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data=</span>imp, <span class="at">exp=</span><span class="fu">lm</span>(grade <span class="sc">~</span> comp <span class="sc">+</span> sex <span class="sc">+</span> eduMother))</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(fit_ex2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         term   estimate  std.error statistic        df      p.value
-1 (Intercept)  3.1139346 0.01390008 224.02273  65.20258 7.538822e-96
-2        comp -0.2975177 0.01015659 -29.29307  14.40224 3.045094e-14
-3         sex -0.2712933 0.01765091 -15.36993 123.83933 1.747964e-30
-4   eduMother -0.1272092 0.02171720  -5.85753  71.79517 1.306656e-07</code></pre>
+<pre><code>         term   estimate   std.error  statistic         df       p.value
+1 (Intercept)  3.1154013 0.012991292 239.806887  215.98416 4.424600e-264
+2        comp -0.2958708 0.008998496 -32.880032   25.14620  3.464608e-22
+3         sex -0.2798662 0.016532064 -16.928691 1001.33591  9.986107e-57
+4   eduMother -0.1174510 0.022775804  -5.156831   44.58934  5.562470e-06</code></pre>
 </div>
 </div>
 <p>What we can see in comparison to the complete case analysis and the first model with imputed data is, that the coefficients are still the same. But: Standard Error and p-value are decreased a lot.</p>
@@ -1024,20 +1024,20 @@ lm(formula = grade ~ comp + sex + eduMother, data = complete(imp,
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--3.03520 -0.55835 -0.01148  0.53959  3.02601 
+-3.07371 -0.55209 -0.01222  0.54303  3.15367 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  3.12263    0.01211 257.866  &lt; 2e-16 ***
-comp        -0.29025    0.00700 -41.467  &lt; 2e-16 ***
-sex         -0.27579    0.01604 -17.198  &lt; 2e-16 ***
-eduMother   -0.13683    0.01897  -7.212 5.89e-13 ***
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.121629   0.012064 258.763  &lt; 2e-16 ***
+comp        -0.296245   0.007024 -42.175  &lt; 2e-16 ***
+sex         -0.279111   0.016011 -17.433  &lt; 2e-16 ***
+eduMother   -0.125970   0.019104  -6.594 4.49e-11 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.8015 on 10527 degrees of freedom
-Multiple R-squared:  0.1998,    Adjusted R-squared:  0.1996 
-F-statistic: 876.4 on 3 and 10527 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.8005 on 10527 degrees of freedom
+Multiple R-squared:  0.2038,    Adjusted R-squared:  0.2036 
+F-statistic: 898.3 on 3 and 10527 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
