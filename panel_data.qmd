@@ -4,7 +4,6 @@ title: "Panel Data"
 
 *Recommended literature:*
 
-
 Greene, W. H. (2000). [Econometric Analysis](https://elibrary.pearson.de/book/99.150005/9781292231150) from 1990. 4th edition. International edition, New Jersey: Prentice Hall, 201-215.
 
 ## Load libraries

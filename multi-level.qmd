@@ -679,7 +679,7 @@ Including the cross-level interaction effect decreases the variance in the rando
 
 What does the model say us? The higher the IQ mean in a class, the IQ counts less for the score and vice versa.
 
-## Exercise : Model comparision
+### Exercise Model comparision
 
 1.  Global intercept model / empty model
 

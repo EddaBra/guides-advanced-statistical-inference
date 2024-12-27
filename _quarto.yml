@@ -5,10 +5,10 @@ book:
   title: "Guides for Advanced Statistical Inference"
   author: "Edda Brandes"
   date: "Summer 2023"
-  cover-image: cover.png
   chapters:
     - index.qmd
     - multi-level.qmd
+    - panel_data.qmd
 format:
   html:
     theme: cosmo
