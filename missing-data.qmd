@@ -8,7 +8,7 @@ Van Buuren, S. (2018). Flexible imputation of missing data. CRC press.[Online Ve
 
 ## Load libraries
 
-```{r load packages, message=FALSE, results='hide'}
+```{r load packages, message=FALSE, include='false'}
 library(haven)
 library(tidyverse) ##basic
 library(stargazer) ##compare models
@@ -365,7 +365,7 @@ This model is a complete case analysis. All data available in the data set is us
 
 2.  Impute missing values (using mice's default settings):
 
-```{r, results='hide'}
+```{r, include='false'}
 #using the default like recommended in literature and by the MICE package
 imp <- mice(DAT) #A scalar giving the number of iterations. The default is 5.
 
@@ -376,7 +376,7 @@ imp1 <- mice(DAT, m=1, # number of multiple imputation
 
 Have a look at your imputed data sets using the command `complete`: Setting `action` to 1 we can have a look in the first imputed data set. Overall, we have imputed 5 data sets.
 
-```{r, results='hide'}
+```{r, include='false'}
 #create an data set out of the first imputation
 imp1 <- mice::complete(imp, 
                  action=1) #A numeric vector or a keyword. Numeric values between 1 and data$m return the data with imputation number action filled in. The value of action = 0 return the original data, with missing values. action can also be one of the following keywords: "all", "long", "broad" and "repeated". See the Details section for the interpretation. The default is action = 1L returns the first imputed data set.
@@ -525,7 +525,7 @@ What we can see in comparison to the complete case analysis and the first model 
 
 To access the coefficients for linear regressions on the imputed data sets on its own, this lines of code are needed. So we can get a look how much the coefficients differ.
 
-```{r results='asis'}
+```{r include='false'}
 #imputed data set 1
 
 imp1 <-  lm(grade~comp+sex+eduMother, data=complete(imp, action=1))
@@ -590,7 +590,7 @@ summary(cc_ex3)
 
 The interaction term is significant negative and decreases the still significant negative effect of mothers education. So if a pupil is female and has a higher educated mother the probability to get better grades increases.
 
-```{r, results='hide'}
+```{r, include='false'}
 # add passive imputation as a method to impute values for the derived variables on the fly
 meth <- make.method(DAT_ext)
 meth["eduMSex"] <- "~I(eduMother * sex)"
@@ -797,7 +797,7 @@ bl <- list(bl1=c("grade", "comp"), #define interrelated variables
 imp_block <- mice(DAT_bl, blocks=bl, m=1, maxit = 1)
 ```
 
-```{r, results='hide'}
+```{r, include='false'}
 meth <- imp_block$method #create new argument for method
 meth["bl2"] <- "logreg" #define logreg as method 
 meth["bl3"] <- "logreg" #define logreg as method 

@@ -4,11 +4,12 @@ project:
 book:
   title: "Guides for Advanced Statistical Inference"
   author: "Edda Brandes"
-  date: "Summer 2023"
+  date: "2023"
   chapters:
     - index.qmd
     - multi-level.qmd
     - panel_data.qmd
+    - missing-data.qmd
 format:
   html:
     theme: cosmo
