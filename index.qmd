@@ -1,0 +1,5 @@
+---
+title: "Preface"
+---
+
+This Quarto Book provides guidance for advanced methods of statistical inference and their implementation in R. The book is based on the course “Advanced Quantitative Data Analysis", lectured by [Prof Dr. Sabine Zinn](https://www.diw.de/de/diw_01.c.617912.de/ueber_uns/menschen_am_diw_berlin/zinn_sabine.html), DIW Berlin) in summer term at Humboldt-Universität zu Berlin.
