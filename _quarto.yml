@@ -10,7 +10,6 @@ book:
     - multi-level.qmd
     - panel_data.qmd
     - missing-data.qmd
-
 format:
   html:
     theme: cosmo
